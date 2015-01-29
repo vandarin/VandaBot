@@ -1,9 +1,12 @@
 
 
-include <_config.scad>
-include <_positions.scad>
+include <_conf/_config.scad>
 include <utils/bom.scad>
 include <vitamins/bars.scad>
+include <vitamins/washers.scad>
+include <vitamins/screws.scad>
+include <_positions.scad>
+use <motor_mount.scad>
 
 module frame() {
 //TOP
@@ -98,11 +101,16 @@ module frame_corners() {
 			translate([frame_offset.x,frame_offset.y, frame_offset.z]) {
 				rotate([0,0,90])
 				frame_corner();
+				translate([-extrusion_diag*1.5, -extrusion_diag*1.5, extrusion_diag/2 -1 + eta])
+					rotate([0, 0, -90])
+					motor_mount();
 			}
 			// BACK TOP LEFT
 			translate([-frame_offset.x,frame_offset.y, frame_offset.z]) {
 				rotate([0,0,180])
 				frame_corner();
+				translate([extrusion_diag*1.5, -extrusion_diag*1.5, extrusion_diag/2 -1])
+					motor_mount();
 			}
 
 			// FRONT BOTTOM RIGHT
@@ -137,6 +145,7 @@ module frame_corner(angle_screws = true) {
 	//main block
 	base_size = angle_screws ? extrusion_diag + frame_corner_thickness : extrusion_size + frame_corner_thickness * 2;
 	position = angle_screws ? extrusion_diag : extrusion_size;
+	color(plastic_part_color("Yellow"))
 	difference() {
 		union() {
 			translate([-position / 2, 0, 0])
@@ -161,7 +170,7 @@ module frame_corner(angle_screws = true) {
 			translate([
 				position - frame_corner_thickness,
 				-position + frame_corner_thickness,
-				position - frame_corner_thickness
+				position
 				])
 				rotate([45,45,0])
 					cube(base_size*2, center=true);

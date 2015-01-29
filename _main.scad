@@ -1,4 +1,7 @@
-include <_config.scad>
+include <_conf/_config.scad>
+
+
 use <frame.scad>
-include <utils/bom.scad>
+
+echo("VandaBot:");
 frame();

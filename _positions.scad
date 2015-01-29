@@ -1,4 +1,4 @@
-include <_config.scad>
+include <_conf/_config.scad>
 frame_offset = [
 	dimensions.x / 2,
 	dimensions.y / 2,
