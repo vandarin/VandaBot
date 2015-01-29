@@ -7,6 +7,7 @@
 //
 // Ball bearings
 //
+BB623 = [3, 10, 4, "623"];            // 623 ball bearing for carriages
 BB624 = [4, 13, 5, "624"];            // 624 ball bearing for idlers
 BB608 = [8, 22, 7, "608"];            // 608 bearings for wades
 
