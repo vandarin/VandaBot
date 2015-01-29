@@ -109,7 +109,7 @@ module frame_corners() {
 			translate([-frame_offset.x,frame_offset.y, frame_offset.z]) {
 				rotate([0,0,180])
 				frame_corner();
-				translate([extrusion_diag*1.5, -extrusion_diag*1.5, extrusion_diag/2 -1])
+				translate([extrusion_diag + mount_thickness*2, -extrusion_diag - mount_thickness*2, extrusion_diag/2 -1])
 					motor_mount();
 			}
 
