@@ -1,8 +1,7 @@
-
 include <conf/config.scad>
-
 include <_positions.scad>
 use <motor_mount.scad>
+use <bits.scad>
 
 module frame_assembly() {
 	assembly("frame");
@@ -15,74 +14,74 @@ module frame_assembly() {
 }
 
 
-module frame_extrusions_top(bom=true) {
+module frame_extrusions_top(showInBom=true) {
 	//FRONT
 	translate([0,-frame_offset.y,frame_offset.z])
 		rotate([45,0,0])
 			rotate([0,90,0])
-				square_tube(tube_dimensions, dimensions.x - extrusion_diag - frame_corner_thickness, bom=bom);
+				square_tube(tube_dimensions, dimensions.x - extrusion_diag - frame_corner_thickness, showInBom=showInBom);
 	//LEFT
 	translate([-frame_offset.x,0,frame_offset.z])
 		rotate([0,45,0])
 			rotate([0,90,90])
-				square_tube(tube_dimensions, dimensions.y - extrusion_diag);
+				square_tube(tube_dimensions, dimensions.y - extrusion_diag, showInBom=showInBom);
 	//BACK
 	translate([0,frame_offset.y,frame_offset.z])
 		rotate([45,0,0])
 			rotate([0,90,0])
-				square_tube(tube_dimensions, dimensions.x - tube_dimensions.x - frame_corner_thickness*2, bom=bom);
+				square_tube(tube_dimensions, dimensions.x - tube_dimensions.x - frame_corner_thickness*2, showInBom=showInBom);
 	//RIGHT
 	translate([frame_offset.x,0,frame_offset.z])
 		rotate([0,45,0])
 			rotate([0,90,90])
-				square_tube(tube_dimensions, dimensions.y - extrusion_diag, bom=bom);
+				square_tube(tube_dimensions, dimensions.y - extrusion_diag, showInBom=showInBom);
 
 }
-module frame_extrusions_bottom(bom=true) {
+module frame_extrusions_bottom(showInBom=true) {
 	//FRONT
 	translate([0,-frame_offset.y,-frame_offset.z])
 		rotate([0,0,0])
 			rotate([0,90,0])
-				square_tube(tube_dimensions, dimensions.x - extrusion_diag - frame_corner_thickness, bom=bom);
+				square_tube(tube_dimensions, dimensions.x - extrusion_diag - frame_corner_thickness, showInBom=showInBom);
 	//LEFT
 	translate([-frame_offset.x,0,-frame_offset.z])
 		rotate([0,0,0])
 			rotate([0,90,90])
-				square_tube(tube_dimensions, dimensions.y - extrusion_diag, bom=bom);
+				square_tube(tube_dimensions, dimensions.y - extrusion_diag, showInBom=showInBom);
 	//BACK
 	translate([0,frame_offset.y,-frame_offset.z])
 		rotate([0,0,0])
 			rotate([0,90,0])
-				square_tube(tube_dimensions, dimensions.x - tube_dimensions.x - frame_corner_thickness*2, bom=bom);
+				square_tube(tube_dimensions, dimensions.x - tube_dimensions.x - frame_corner_thickness*2, showInBom=showInBom);
 	//RIGHT
 	translate([frame_offset.x,0,-frame_offset.z])
 		rotate([0,0,0])
 			rotate([0,90,90])
-				square_tube(tube_dimensions, dimensions.y - extrusion_diag, bom=bom);
+				square_tube(tube_dimensions, dimensions.y - extrusion_diag, showInBom=showInBom);
 
 }
 
-module frame_extrusions_sides(bom=true) {
+module frame_extrusions_sides(showInBom=true) {
 	// FRONT RIGHT
 	translate([frame_offset.x, -frame_offset.y, 0])
 		rotate([0,0,0])
 			rotate([0,0,90])
-				square_tube(tube_dimensions, dimensions.z,bom=bom);
+				square_tube(tube_dimensions, dimensions.z,showInBom=showInBom);
 	// FRONT LEFT
 	translate([-frame_offset.x, -frame_offset.y, 0])
 		rotate([0,0,0])
 			rotate([0,0,90])
-				square_tube(tube_dimensions, dimensions.z,bom=bom);
+				square_tube(tube_dimensions, dimensions.z,showInBom=showInBom);
 	// BACK RIGHT
 	translate([frame_offset.x, frame_offset.y, 0])
 		rotate([0,0,0])
 			rotate([0,0,90])
-				square_tube(tube_dimensions, dimensions.z,bom=bom);
+				square_tube(tube_dimensions, dimensions.z,showInBom=showInBom);
 	// BACK LEFT
 	translate([-frame_offset.x, frame_offset.y, 0])
 		rotate([0,0,0])
 			rotate([0,0,90])
-				square_tube(tube_dimensions, dimensions.z,bom=bom);
+				square_tube(tube_dimensions, dimensions.z,showInBom=showInBom);
 }
 
 
@@ -91,32 +90,24 @@ module frame_corners() {
 		union() {
 			// FRONT TOP RIGHT
 			translate([frame_offset.x,-frame_offset.y, frame_offset.z]) {
-				frame_corner_top_stl();
-				frame_corner_screws(frame_corner_top_holes());
+				xy_pulley_assembly();
 			}
 			// FRONT TOP LEFT
 			translate([-frame_offset.x,-frame_offset.y, frame_offset.z]) {
 				rotate([0,0,-90]) {
-					frame_corner_top_stl();
-					frame_corner_screws(frame_corner_top_holes());
+					xy_pulley_assembly();
 				}
 			}
 			// BACK TOP RIGHT
 			translate([frame_offset.x,frame_offset.y, frame_offset.z]) {
 				rotate([0,0,90]) {
-					translate([-extrusion_diag*1.5, extrusion_diag*1.5, extrusion_diag/2 -1 + eta])
-						motor_mount_assembly();
-					frame_corner_top_motor_stl();
-					frame_corner_screws(frame_corner_top_holes());
+					xy_motor_assembly();
 				}
 			}
 			// BACK TOP LEFT
 			translate([-frame_offset.x,frame_offset.y, frame_offset.z]) {
 				rotate([0,0,180]) {
-					frame_corner_top_motor_stl();
-					frame_corner_screws(frame_corner_top_holes());
-				translate([-extrusion_diag*1.5, extrusion_diag*1.5, extrusion_diag/2 -1 + eta])
-					motor_mount_assembly();
+					xy_motor_assembly();
 				}
 			}
 
@@ -190,6 +181,10 @@ module frame_corner(angled = true) {
 					])
 					rotate([45,45,0])
 						cube(base_size*2, center=true);
+				translate([-base_size - extrusion_size/2 - frame_corner_thickness,0,-base_size-base_size/2])
+					cube(size=base_size*2, center=true);
+				translate([0,base_size + extrusion_size/2 + frame_corner_thickness,-base_size-base_size/2])
+					cube(size=base_size*2, center=true);
 				translate([-frame_offset.x,frame_offset.y,-frame_offset.z])
 					frame_extrusions_top(false);
 				translate([-frame_offset.x,frame_offset.y,-frame_offset.z])
@@ -198,14 +193,8 @@ module frame_corner(angled = true) {
 				for(i = frame_corner_top_holes()) {
 				translate(i[0])
 					rotate(i[1]) {
-						poly_cylinder(r=screw_radius(frame_thick_screw),h=extrusion_size);
-						translate([0,0,-(frame_corner_thickness* (angled ? 3 : 2))/2])
-						cylinder(
-							h=screw_head_height(frame_thick_screw) + washer_thickness(screw_washer(frame_thick_screw)),
-							d=screw_boss_diameter(frame_thick_screw),
-							center=true,
-							$fn=20
-							);
+						screw_hole(frame_thick_screw, screw_longer_than(frame_corner_thickness + tube_dimensions.z));
+
 
 					}
 				}
@@ -224,14 +213,7 @@ module frame_corner(angled = true) {
 				for(i = frame_corner_bottom_holes()) {
 				translate(i[0])
 					rotate(i[1]) {
-						#poly_cylinder(r=screw_radius(frame_thick_screw),h=extrusion_size);
-						cylinder(
-							h=frame_corner_thickness* 3,
-							d=screw_boss_diameter(frame_thick_screw),
-							center=true,
-							$fn=20
-							);
-
+						screw_hole(frame_thick_screw, screw_longer_than(frame_corner_thickness + tube_dimensions.z));
 					}
 				}
 			}
@@ -239,56 +221,92 @@ module frame_corner(angled = true) {
 	}
 }
 
-module frame_corner_top_stl() {
-	stl("frame_corner_top");
-	frame_corner();
-}
-
-module frame_corner_top_motor_stl() {
-	stl("frame_corner_top_motor");
-	frame_corner();
-	translate([-extrusion_diag*1.5, extrusion_diag*1.5, extrusion_diag/2 -1 + eta])
-		rotate([0, 0, -180])
-		motor_mount();
-}
-
 module frame_corner_bottom_stl() {
 	stl("frame_corner_bottom");
 	frame_corner(false);
 }
+
 module frame_corner_screws(holes) {
-	#for (i = holes) {
+	for (i = holes) {
 		translate(i[0])
 			rotate(i[1]) {
-				rotate([0,180,0])
 				screw_and_washer(frame_thick_screw, screw_longer_than(frame_corner_thickness + tube_dimensions.z + washer_thickness(screw_washer(frame_thick_screw))));
 			}
 	}
 }
 
+module xy_pulley_assembly() {
+	assembly("xy_pulley");
+	xy_pulley_mount_stl();
+	frame_corner_screws(frame_corner_top_holes());
+	translate([-motor_offset(XY_motor), motor_offset(XY_motor), mount_thickness/2]) {
+		translate([0,0,washer_thickness(M8_penny_washer)/2]) {
+			washer(M8_penny_washer);
+			translate([0,0,ball_bearing_width(XY_bearing)/2+washer_thickness(M8_washer)]) {
+				ball_bearing(XY_bearing);
+				translate([0,0,ball_bearing_width(XY_bearing)/2])
+				washer(M8_penny_washer);
+				translate([0,0,ball_bearing_width(XY_bearing)+washer_thickness(M8_penny_washer)]) {
+					ball_bearing(XY_bearing);
+					translate([0,0,ball_bearing_width(XY_bearing)/2])
+						washer(M8_penny_washer);
+					translate([0,0,screw_head_height(frame_thick_screw)/2 + washer_thickness(M8_penny_washer)*2])
+					screw(M8_hex_screw, screw_longer_than(ball_bearing_width(XY_bearing)*2 + washer_thickness(screw_washer(M8_hex_screw))*3 + mount_thickness + nut_thickness(screw_nut(M8_hex_screw), true)));
+				}
+			}
+
+		}
+	}
+	translate([-motor_offset(XY_motor), motor_offset(XY_motor),-nut_thickness(screw_nut(frame_thick_screw))])
+		rotate([180,0,0])
+		nut_and_washer(screw_nut(M8_hex_screw),true);
+
+	end("xy_pulley");
+}
+module xy_pulley_mount_stl() {
+	stl("xy_pulley_mount");
+	difference(){
+		union() {
+			frame_corner();
+			translate([-motor_offset(XY_motor)/2 - extrusion_diag/2, motor_offset(XY_motor)/2 + extrusion_diag/2, 0])
+				cube(size = [motor_offset(XY_motor), motor_offset(XY_motor), mount_thickness], center=true);
+		}
+		translate([-motor_offset(XY_motor), motor_offset(XY_motor), mount_thickness/2])
+			screw_hole(frame_thick_screw,screw_longer_than(mount_thickness));
+	}
+}
+
 function frame_corner_top_holes(angle = 45) = [
 	// translate,rotate
-	[ [-extrusion_diag,extrusion_diag/2 - frame_corner_thickness,-extrusion_diag/2 + frame_corner_thickness], [angle,0,0] ],
-	[ [-extrusion_diag,-extrusion_diag/2 + frame_corner_thickness,-extrusion_diag/2 + frame_corner_thickness ], [-angle,0,0] ],
+	[ [-extrusion_size*1.5,extrusion_size/3+frame_corner_thickness, -extrusion_size/3 - frame_corner_thickness], [180+45,0,0] ],
+	[ [-extrusion_size*1.5,-extrusion_size/3-frame_corner_thickness, -extrusion_size/3 - frame_corner_thickness], [180-45,0,0] ],
 
-	[ [-extrusion_diag/2 + frame_corner_thickness,extrusion_diag,-extrusion_diag/2 + frame_corner_thickness ], [0,angle,0] ],
-	[ [extrusion_diag/2 - frame_corner_thickness,extrusion_diag,-extrusion_diag/2 + frame_corner_thickness ], [0,-angle,0] ],
+	[ [-extrusion_size/3-frame_corner_thickness, extrusion_size*1.5,-extrusion_size/3 - frame_corner_thickness], [0,180+45,0] ],
+	[ [extrusion_size/3+frame_corner_thickness, extrusion_size*1.5,-extrusion_size/3 - frame_corner_thickness], [0,180-45,0] ],
 
-	[ [0, extrusion_diag/2 + washer_thickness(screw_washer(frame_thick_screw)) ,-extrusion_diag ], [90,0,0] ],
-	[ [-extrusion_diag/2 - washer_thickness(screw_washer(frame_thick_screw)), 0,-extrusion_diag ], [0,90,0] ]
-];
 
-function frame_corner_bottom_holes(angle = 90) = [
+	[ [0, extrusion_size/2 + frame_corner_thickness, -extrusion_size*1.5], [-90,0,0] ],
+	[ [-extrusion_size/2 - frame_corner_thickness, 0, -extrusion_size*1.5], [-90,0,90] ],
+	];
+
+function frame_corner_bottom_holes() = [
 	// translate,rotate
-	[ [-extrusion_size*1.5,extrusion_size - frame_corner_thickness,0], [angle,0,0] ],
-	[ [-extrusion_size*1.5,0,-extrusion_size/2 - frame_corner_thickness*2], [0,0,0] ],
+	[ [-extrusion_size*1.5, 0, -extrusion_size/2 - frame_corner_thickness], [180,0,0] ],
+	[ [-extrusion_size*1.5, extrusion_size/2 + frame_corner_thickness, 0], [-90,0,0] ],
+	[ [-extrusion_size/2 - frame_corner_thickness, extrusion_size*1.5,  0], [-90,0,90] ],
+	[ [0, extrusion_size*1.5, -extrusion_size/2 - frame_corner_thickness], [180,0,0] ],
 
-	[ [-extrusion_size +frame_corner_thickness,extrusion_size*1.5,0 ], [0,angle,0] ],
-	[ [0, extrusion_size*1.5, -extrusion_size/2 - frame_corner_thickness * 2 ], [0,0,0] ],
+	[ [0, extrusion_size/2 + frame_corner_thickness, -extrusion_size*1.5], [-90,0,0] ],
+	[ [-extrusion_size/2 - frame_corner_thickness, 0, -extrusion_size*1.5], [-90,0,90] ],
+	];
 
-	[ [0, extrusion_size - frame_corner_thickness,-extrusion_size*1.5 ], [90,0,0] ],
-	[ [-extrusion_size + frame_corner_thickness, 0,-extrusion_size*1.5 ], [0,90,0] ]
-];
 
-frame_corner_bottom_stl();
-frame_corner_screws();
+if (false) {
+	frame_corner_bottom_stl();
+	frame_corner_screws(frame_corner_bottom_holes());
+
+} else {
+	xy_pulley_assembly();
+	//frame_corner_screws(frame_corner_top_holes());
+
+}

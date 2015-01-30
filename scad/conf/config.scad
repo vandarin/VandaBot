@@ -183,8 +183,8 @@ frame_screw_length = frame_nuts ? screw_longer_than(
                                       + 2 * washer_thickness(frame_washer)
                                   );
 
-echo("base screw length", base_screw_length);
-echo("frame screw length",frame_screw_length);
+//echo("base screw length", base_screw_length);
+//echo("frame screw length",frame_screw_length);
 
 
 

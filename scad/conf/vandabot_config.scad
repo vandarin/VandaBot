@@ -9,8 +9,6 @@ mount_thickness = 5;
 printed_plastic_color = "yellow";
 
 
-
-
 AXIS_MOTOR = NEMA17;
 
 echo("VandaBot:");
@@ -53,19 +51,13 @@ stays_from_window = false;
 cnc_sheets = true;                 // If sheets are cut by CNC we can use slots, etc instead of just round holes
 pulley_type = T2p5x16_metal_pulley;
 
-Y_carriage = DiBond;
 
-X_belt = T2p5x6;
-Y_belt = T2p5x6;
+XY_belt = GT2;
+XY_motor = NEMA17;
+XY_motor_clearance = 5;
+XY_bearing = BB608;
+motor_pulley = GT2x20_metal_pulley;
 motor_shaft = 5;
-Z_screw_dia = 5;            // Studding for Z axis
-
-Y_carriage_depth = bed_holes[1] + 7;
-Y_carriage_width = bed_holes[1] + 7;
-
-Z_nut_radius = M6_nut_radius;
-Z_nut_depth = M6_nut_depth;
-Z_nut = M6_nut;
 
 //
 // Default screw use where size doesn't matter
@@ -77,7 +69,7 @@ hex_screw = M3_hex_screw;
 //
 frame_soft_screw = No4_screw;               // Used when sheet material is soft, e.g. wood
 frame_thin_screw = M3_cap_screw;            // Used with nuts when sheets are thin
-frame_thick_screw = M4_cap_screw;           // Used with tapped holes when sheets are thick and hard, e.g. plastic or metal
+frame_thick_screw = M4_cap_screw;
 //
 // Feature sizes
 //

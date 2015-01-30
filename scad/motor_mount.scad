@@ -1,28 +1,34 @@
 include <conf/config.scad>
-include <conf/colors.scad>
 include <_positions.scad>
-include <conf/colors.scad>
-include <utils/bom.scad>
-include <vitamins/washers.scad>
-include <vitamins/screws.scad>
-include <vitamins/stepper-motors.scad>
+use <frame.scad>
 
-module motor_mount_assembly(type = NEMA17) {
-	%translate([0,0,-mount_thickness/2])
-	NEMA(type);
-	translate([0, 0, mount_thickness]/2)
-	NEMA_screws(type, screw_length = 8 + mount_thickness, screw_type = M3_cap_screw);
+function motor_offset(type) = NEMA_width(type)/2 + XY_motor_clearance + extrusion_diag/2;
+
+module xy_motor_assembly(type = XY_motor) {
+	assembly("xy_motor");
+	xy_motor_mount_stl(type);
+	frame_corner_screws(frame_corner_top_holes());
+	translate([-motor_offset(type),motor_offset(type),-mount_thickness/2]) {
+		NEMA(type);
+		translate([0, 0, mount_thickness])
+		NEMA_screws(type, screw_length = 8 + mount_thickness, screw_type = M3_cap_screw);
+
+	}
+	end("xy_motor");
 }
 
-module motor_mount(type = NEMA17) {
+
+module xy_motor_mount_stl(type = XY_motor) {
+	stl("xy_motor_mount");
+	frame_corner();
+	translate([-motor_offset(type),motor_offset(type),0])
 	difference() {
 		union() {
-			translate([-extrusion_diag/2 + mount_thickness,extrusion_diag/2 - mount_thickness,0])
 			color(plastic_part_color("Yellow")) {
 			cube(
 				[
-				NEMA_width(type) + extrusion_diag - mount_thickness,
-				NEMA_width(type) + extrusion_diag - mount_thickness,
+				NEMA_width(type) + XY_motor_clearance*2,
+				NEMA_width(type) + XY_motor_clearance*2,
 				mount_thickness
 				],
 				center=true
@@ -30,10 +36,10 @@ module motor_mount(type = NEMA17) {
 			}
 
 		}
-		translate([-extrusion_diag * 2 , -extrusion_diag + mount_thickness, 0])
-			cylinder(h=mount_thickness + eta, r=extrusion_diag, center=true);
-		translate([extrusion_diag, extrusion_diag * 2 - frame_corner_thickness, 0])
-			cylinder(h=mount_thickness + eta, r=extrusion_diag, center=true);
+		*translate([-extrusion_diag * 2 , -extrusion_diag + mount_thickness, 0])
+			#cylinder(h=mount_thickness + eta, r=extrusion_diag, center=true);
+		*translate([extrusion_diag, extrusion_diag * 2 - frame_corner_thickness, 0])
+			#cylinder(h=mount_thickness + eta, r=extrusion_diag, center=true);
 		cylinder(h=mount_thickness*2, r=NEMA_big_hole(type), center=true);
 		for(x = NEMA_holes(type))
 	        for(y = NEMA_holes(type))
@@ -42,4 +48,5 @@ module motor_mount(type = NEMA17) {
 	}
 }
 
-motor_mount();
+xy_motor_assembly();
+//xy_motor_mount_stl(NEMA17);
