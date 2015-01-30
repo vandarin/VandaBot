@@ -157,3 +157,18 @@ module screw_and_washer(type, length, spring = false) {
             screw(type, length);
     }
 }
+
+
+module screw_hole(type, length) {
+    // pilot
+    rotate([180,0,0])
+        poly_cylinder(r=screw_pilot_hole(type),h=length);
+    // head space
+    translate([0,0,(screw_head_height(type) + washer_thickness(screw_washer(type)))])
+        cylinder(
+            h=(screw_head_height(type) + washer_thickness(screw_washer(type))) *2,
+            d=screw_boss_diameter(type),
+            center=true,
+            $fn=20
+            );
+}
