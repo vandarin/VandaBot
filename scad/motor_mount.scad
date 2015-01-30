@@ -1,14 +1,20 @@
-include <_conf/_config.scad>
-include <_conf/colors.scad>
+include <conf/config.scad>
+include <conf/colors.scad>
 include <_positions.scad>
-include <_conf/colors.scad>
+include <conf/colors.scad>
 include <utils/bom.scad>
 include <vitamins/washers.scad>
 include <vitamins/screws.scad>
 include <vitamins/stepper-motors.scad>
 
+module motor_mount_assembly(type = NEMA17) {
+	%translate([0,0,-mount_thickness/2])
+	NEMA(type);
+	translate([0, 0, mount_thickness]/2)
+	NEMA_screws(type, screw_length = 8 + mount_thickness, screw_type = M3_cap_screw);
+}
+
 module motor_mount(type = NEMA17) {
-	//translate([-extrusion_diag/2, -NEMA_width(type) + mount_thickness, extrusion_diag / 2 - mount_thickness /4 ]) {
 	difference() {
 		union() {
 			translate([-extrusion_diag/2 + mount_thickness,extrusion_diag/2 - mount_thickness,0])
@@ -34,11 +40,6 @@ module motor_mount(type = NEMA17) {
 	            translate([x, y, 0])
 	                cylinder(r = 3/2, h = mount_thickness*2, center = true);
 	}
-	%translate([0,0,-mount_thickness/2])
-	NEMA(type);
-	translate([0, 0, mount_thickness]/2)
-	NEMA_screws(type, screw_length = 8 + mount_thickness, screw_type = M3_cap_screw);
-	//}
 }
 
 motor_mount();

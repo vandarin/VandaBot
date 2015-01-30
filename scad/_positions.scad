@@ -1,4 +1,4 @@
-include <_conf/_config.scad>
+include <conf/config.scad>
 frame_offset = [
 	dimensions.x / 2,
 	dimensions.y / 2,
@@ -7,7 +7,7 @@ frame_offset = [
 tube_dimensions = [
 	extrusion_size,
 	extrusion_size,
-	extrusion_size
+	25.4/16
 	];
 extrusion_diag = sqrt(
 		pow(extrusion_size, 2)
