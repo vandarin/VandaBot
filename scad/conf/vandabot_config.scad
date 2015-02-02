@@ -5,7 +5,9 @@ dimensions = [300,350,300];
 extrusion_size = 0.75 * 25.4; // 3/4 inch tube
 frame_corner_thickness = 3;
 mount_thickness = 5;
-
+carriage_clearance = 6;
+l_hinge_thickness = 0.6;
+l_hinge_width = 5;
 printed_plastic_color = "yellow";
 
 
@@ -56,6 +58,7 @@ XY_belt = GT2;
 XY_motor = NEMA17;
 XY_motor_clearance = 5;
 XY_bearing = BB608;
+carriage_bearing = BB623;
 motor_pulley = GT2x20_metal_pulley;
 motor_shaft = 5;
 
