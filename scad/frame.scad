@@ -240,18 +240,18 @@ module xy_pulley_assembly() {
 	xy_pulley_mount_stl();
 	frame_corner_screws(frame_corner_top_holes());
 	translate([-motor_offset(XY_motor), motor_offset(XY_motor), mount_thickness/2]) {
-		translate([0,0,washer_thickness(M8_penny_washer)/2]) {
-			washer(M8_penny_washer);
-			translate([0,0,ball_bearing_width(XY_bearing)/2+washer_thickness(M8_washer)]) {
+		translate([0,0,washer_thickness(M5_penny_washer)/2]) {
+			washer(M5_penny_washer);
+			translate([0,0,ball_bearing_width(XY_bearing)/2+washer_thickness(M4_washer)]) {
 				ball_bearing(XY_bearing);
 				translate([0,0,ball_bearing_width(XY_bearing)/2])
-				washer(M8_penny_washer);
-				translate([0,0,ball_bearing_width(XY_bearing)+washer_thickness(M8_penny_washer)]) {
+				washer(M5_penny_washer);
+				translate([0,0,ball_bearing_width(XY_bearing)+washer_thickness(M5_penny_washer)]) {
 					ball_bearing(XY_bearing);
 					translate([0,0,ball_bearing_width(XY_bearing)/2])
-						washer(M8_penny_washer);
-					translate([0,0,screw_head_height(frame_thick_screw)/2 + washer_thickness(M8_penny_washer)*2])
-					screw(M8_hex_screw, screw_longer_than(ball_bearing_width(XY_bearing)*2 + washer_thickness(screw_washer(M8_hex_screw))*3 + mount_thickness + nut_thickness(screw_nut(M8_hex_screw), true)));
+						washer(M5_penny_washer);
+					translate([0,0,screw_head_height(frame_thick_screw)/2 + washer_thickness(M5_penny_washer)*2])
+					screw(M4_cap_screw, screw_longer_than(ball_bearing_width(XY_bearing)*2 + washer_thickness(screw_washer(M4_cap_screw))*3 + mount_thickness + nut_thickness(screw_nut(M4_cap_screw), true)));
 				}
 			}
 
@@ -259,7 +259,7 @@ module xy_pulley_assembly() {
 	}
 	translate([-motor_offset(XY_motor), motor_offset(XY_motor),-nut_thickness(screw_nut(frame_thick_screw))])
 		rotate([180,0,0])
-		nut_and_washer(screw_nut(M8_hex_screw),true);
+		nut_and_washer(screw_nut(M4_cap_screw),true);
 
 	end("xy_pulley");
 }

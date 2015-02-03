@@ -10,9 +10,10 @@ module xy_motor_assembly(type = XY_motor) {
 	frame_corner_screws(frame_corner_top_holes());
 	translate([-motor_offset(type),motor_offset(type),-mount_thickness/2]) {
 		NEMA(type);
-		translate([0, 0, mount_thickness])
-		NEMA_screws(type, screw_length = 8 + mount_thickness, screw_type = M3_cap_screw);
-
+		translate([0, 0, mount_thickness]) {
+			metal_pulley(GT2x20_metal_pulley);
+			NEMA_screws(type, screw_length = 8 + mount_thickness, screw_type = M3_cap_screw);
+		}
 	}
 	end("xy_motor");
 }
