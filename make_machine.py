@@ -10,7 +10,7 @@ def make_machine(machine):
     boms(machine)
     sheets(machine)
     stls(machine)
-    # plates(machine)
+    plates(machine)
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:

@@ -6,20 +6,10 @@ import shutil
 from stls import stls, bom_to_stls
 
 plate_list = [
-    # "cal.stl",
-    # "atx_brackets.stl",
-    # "bar_clamps.stl",
-    # "cable_clips.stl",
-    # "d_motor_brackets.stl",
-    # "fixing_blocks.stl",
-    # "ribbon_clamps.stl",
-    # "small_bits.stl",
-    # "spool_holder_brackets.stl",
-    # "wades_extruder.stl",
-    # "x_carriage_parts.stl",
-    # "y_bearing_mounts.stl",
-    # "y_belt_anchors.stl",
-    # "z_motor_brackets.stl"
+    "frame_corner_bottom.stl",
+    "xy_motor_mount.stl",
+    "xy_pulley_mount.stl",
+    "y_carriage_slide.stl"
 ]
 
 def plates(machine):
