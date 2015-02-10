@@ -1,7 +1,7 @@
 
 
 // OUTSIDE DIMENSIONS
-dimensions = [300,350,300];
+dimensions = [350,400,350];
 extrusion_size = 0.75 * 25.4; // 3/4 inch tube
 frame_corner_thickness = 3;
 mount_thickness = 5;
