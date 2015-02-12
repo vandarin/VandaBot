@@ -51,13 +51,13 @@ clip_handles = false;
 single_piece_frame = true;
 stays_from_window = false;
 cnc_sheets = true;                 // If sheets are cut by CNC we can use slots, etc instead of just round holes
-pulley_type = T2p5x16_metal_pulley;
+pulley_type = GT2x20_metal_pulley;
 
 
 XY_belt = GT2;
 XY_motor = NEMA17;
 XY_motor_clearance = 5;
-XY_bearing = BB624;
+XY_bearing = BBF624;
 carriage_bearing = BB623;
 motor_pulley = GT2x20_metal_pulley;
 motor_shaft = 5;

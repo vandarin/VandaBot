@@ -6,12 +6,12 @@ function motor_offset(type) = NEMA_width(type)/2 + XY_motor_clearance + extrusio
 
 module xy_motor_assembly(type = XY_motor) {
 	assembly("xy_motor");
-	xy_motor_mount_stl(type);
 	frame_corner_screws(frame_corner_top_holes());
-	translate([-motor_offset(type),motor_offset(type),-mount_thickness/2]) {
+	xy_motor_mount_stl(type);
+	translate([-motor_offset(type),motor_offset(type),extrusion_diag/2 -mount_thickness]) {
 		NEMA(type);
 		translate([0, 0, mount_thickness]) {
-			metal_pulley(GT2x20_metal_pulley);
+			metal_pulley(pulley_type);
 			NEMA_screws(type, screw_length = 8 + mount_thickness, screw_type = M3_cap_screw);
 		}
 	}
@@ -21,8 +21,8 @@ module xy_motor_assembly(type = XY_motor) {
 
 module xy_motor_mount_stl(type = XY_motor) {
 	stl("xy_motor_mount");
-	frame_corner();
-	translate([-motor_offset(type),motor_offset(type),0])
+	render() frame_corner();
+	translate([-motor_offset(type),motor_offset(type),extrusion_diag/2 - mount_thickness/2])
 	difference() {
 		union() {
 			color(plastic_part_color("Yellow")) {

@@ -61,18 +61,33 @@ module y_carriage_end_stl() {
 					);
 				rotate([-45,0,0]) {
 
-					translate([0,-extrusion_diag,0])
-					cube(size=[extrusion_size*1.5 + thick_wall, washer_diameter(M5_penny_washer) + thick_wall, thick_wall], center=true);
-					translate([0,extrusion_diag,0])
-					cube(size=[extrusion_size*1.5 + thick_wall, washer_diameter(M5_penny_washer) + thick_wall, thick_wall], center=true);
+					translate([0, 0, extrusion_diag/2])
+					cube(size=[extrusion_size*1.5 + thick_wall, extrusion_diag*3, mount_thickness], center=true);
 					}
 				}
 			}
+			// extrusion
 			translate([thick_wall/2,0,0])
 			cube([extrusion_size*2.5+thick_wall,extrusion_size,extrusion_size], center=true);
-			for( i = [0, 90] ) {
-				rotate([i,0,0])
-				poly_cylinder(r = screw_radius(frame_thick_screw), h = extrusion_size*2, center = true);
+			//frame holes
+			translate([-thick_wall, 0, 0])
+			for( i = [0, -90] ) {
+				rotate([i,0,0]) {
+					poly_cylinder(r = screw_radius(frame_thick_screw), h = extrusion_size*2, center = true);
+					translate([0,0,extrusion_size + thick_wall/2])
+					cylinder(h=extrusion_size, d=screw_boss_diameter(frame_thick_screw), center=true);
+				}
+			}
+			// pulley_tower holes
+			translate([-carriage_width - extrusion_size, 0,0]) {
+				rotate([45, 0, 0]) {
+
+					y_pulley_placement() screw_hole(frame_thick_screw, mount_thickness*2);
+					translate([(carriage_width - thick_wall)*2 + pulley_od(pulley_type), 0, 0])
+					mirror([])
+					y_pulley_placement() screw_hole(frame_thick_screw, mount_thickness*2);
+
+				}
 			}
 		}
 		translate([-carriage_width/2 - thick_wall/4*3,0,0])
@@ -82,7 +97,7 @@ module y_carriage_end_stl() {
 	}
 }
 module y_carriage_end_vitamins() {
-	translate([carriage_width + extrusion_size,0,0]) {
+	translate([carriage_width + extrusion_size - thick_wall,0,0]) {
 		translate([0, -extrusion_size/2, extrusion_size/2])
 			rotate([45,0,0])
 			screw_and_washer(frame_thick_screw, screw_longer_than(thick_wall+tube_dimensions.z));
@@ -96,12 +111,17 @@ module y_carriage_end_vitamins() {
 			rotate([315,0,0])
 			screw_and_washer(frame_thick_screw, screw_longer_than(thick_wall+tube_dimensions.z));
 	}
-	translate([carriage_width-thick_wall,thick_wall/2, -extrusion_diag])
+		y_pulley_placement()
+			pulley_tower();
+}
+
+module y_pulley_placement() {
+	translate([carriage_width-thick_wall + pulley_od(pulley_type),thick_wall/2 + extrusion_diag/2, -extrusion_diag])
 		rotate([-90,0,0])
-		pulley_tower();
-	translate([carriage_width-thick_wall,thick_wall/2, extrusion_diag])
+		children();
+	translate([carriage_width-thick_wall,thick_wall/2 + extrusion_diag/2, extrusion_diag])
 		rotate([-90,0,0])
-		pulley_tower();
+		children();
 }
 
 module y_carriage_slide_stl() {
@@ -226,8 +246,8 @@ module carriage_tab() {
 		}
 }
 
-//xy_carriage_assembly();
-y_carriage_slide_assembly();
+xy_carriage_assembly();
+//y_carriage_slide_assembly();
 
 
 //y_carriage_end_stl();
