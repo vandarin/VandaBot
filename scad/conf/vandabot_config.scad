@@ -11,12 +11,11 @@ l_hinge_width = 5;
 printed_plastic_color = "yellow";
 
 
-AXIS_MOTOR = NEMA17;
-
 echo("VandaBot:");
 
-hot_end = JHeadMk5;
-
+//hot_end = E3Dv6;
+hotend_radius = 15;
+hotend_offset = 9.4; // from extruder STL
 X_travel = 150;
 Y_travel = 150;
 Z_travel = 150;
@@ -58,6 +57,8 @@ XY_belt = GT2;
 XY_motor = NEMA17;
 XY_motor_clearance = 5;
 XY_bearing = BBF624;
+E_motor = NEMA17;
+E_motor_clearance = 2;
 carriage_bearing = BB623;
 motor_pulley = GT2x20_metal_pulley;
 motor_shaft = 5;

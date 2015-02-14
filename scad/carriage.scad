@@ -2,20 +2,26 @@ include <conf/config.scad>
 include <_positions.scad>
 use <MCAD/shapes.scad>
 use <bits.scad>
+use <extruder.scad>
 
 //carriage_bearing = BB624;
 
-bb_mount_size = max(extrusion_size,ball_bearing_diameter(carriage_bearing)+carriage_clearance);
-carriage_height = bb_mount_size*3;
-carriage_width = max(bb_mount_size,ball_bearing_diameter(carriage_bearing)*2)+extrusion_size+carriage_clearance;
+
 //function grip_offset(extrusion_size = extrusion_size) = extrusion_size + ball_bear;
 module xy_carriage_assembly() {
 	assembly("xy_carriage");
-	translate([-frame_offset.x, 0, 0])
-	rotate([90,0,0]) {
-		y_carriage_slide_assembly();
-		y_carriage_end_stl();
-		y_carriage_end_vitamins();
+	translate([-frame_offset.x, 0, 0]) {
+		translate([carriage_width/2 + screw_boss_diameter(frame_thick_screw)/2,0,0]) {
+			translate([0,0,thick_wall*2])
+			screw_and_washer(frame_thick_screw, screw_longer_than(thick_wall*5));
+			translate([0,0,-thick_wall*2.5])
+				nut(screw_nut(frame_thick_screw));
+		}
+		rotate([90,0,0]) {
+			y_carriage_slide_assembly();
+			y_carriage_end_stl();
+			y_carriage_end_vitamins();
+		}
 	}
 	translate([frame_offset.x, 0, 0]) {
 		translate([-carriage_width/2 - screw_boss_diameter(frame_thick_screw)/2,0,0]) {
@@ -24,6 +30,7 @@ module xy_carriage_assembly() {
 			translate([0,0,-thick_wall*2.5])
 				nut(screw_nut(frame_thick_screw));
 		}
+
 		rotate([-90,180,0]) {
 			y_carriage_slide_assembly();
 			y_carriage_end_stl();
@@ -33,7 +40,49 @@ module xy_carriage_assembly() {
 	rotate([0,90,0])
 	rotate([0,0,45])
 	square_tube(tube_dimensions, dimensions.x - carriage_width*2);
+	x_carriage_assembly();
 	end("xy_carriage");
+}
+
+module x_carriage_assembly() {
+	assembly("x_carriage");
+	x_carriage_stl();
+	rotate([45,0,0]) rotate([0,90,0])
+	{
+		carriage_slide_vitamins();
+	}
+	extruder_assembly();
+	end("x_carriage");
+}
+
+module x_carriage_stl() {
+	stl("x_carriage");
+	rotate([45,0,0]) rotate([0,90,0])
+		render() carriage_slide();
+	translate([
+		0,
+		-carriage_width/2,
+		carriage_width
+		])
+	difference(){
+		union() {
+		// vertical mount
+		translate([0, mount_thickness/2 - hotend_offset, mount_thickness])
+			cube(size=[carriage_height, mount_thickness, NEMA_width(E_motor)+mount_thickness*2], center=true);
+		// connector
+		translate([0, -hotend_offset/2+mount_thickness/2, -carriage_width/2])
+			cube(size=[carriage_height, hotend_offset + mount_thickness, thick_wall], center=true);
+		translate([0,0,-NEMA_width(E_motor)/2 - mount_thickness+0.7])
+			rotate([-90,0,0]) rotate([0, 90, 0])
+			fillet(mount_thickness, carriage_height);
+		}
+		translate([0,-hotend_offset+mount_thickness/2, E_motor_clearance])
+			rotate([90,0,0])
+			NEMA_all_holes(E_motor);
+		translate([0,-hotend_offset,-NEMA_width(E_motor)/2 - mount_thickness+0.5])
+			rotate([0, -90, 0])
+			fillet(mount_thickness, carriage_height+5);
+	}
 }
 
 module y_carriage_slide_assembly() {
@@ -127,7 +176,7 @@ module y_pulley_placement() {
 module y_carriage_slide_stl() {
 	stl("y_carriage_slide");
 	rotate([0,0,-45])
-	carriage_slide();
+	render() carriage_slide();
 	translate([carriage_width/2-thick_wall/2,-thick_wall*1.5,0])
 		rotate([90,0,0])
 		carriage_tab();
@@ -185,10 +234,19 @@ module carriage_slide() {
 			translate([0,-l_hinge_width,0])
 			difference() {
 				// outer shell
-				roundedBox(carriage_width-thick_wall,carriage_width+thick_wall+l_hinge_width*2,carriage_height,carriage_clearance/4*3);
+				roundedBox(
+					carriage_width,
+					carriage_width+thick_wall+l_hinge_width*2,
+					carriage_height,carriage_clearance/4*3
+					);
 				difference() {
 					// inner shell
-					roundedBox(carriage_width-thick_wall*2,carriage_width+l_hinge_width*2,carriage_height+10,carriage_clearance/2);
+					roundedBox(
+						carriage_width-thick_wall*2,
+						carriage_width+l_hinge_width*2 - thick_wall/2,
+						carriage_height+10,
+						carriage_clearance/2
+						);
 				}
 			}
 		}
@@ -248,7 +306,8 @@ module carriage_tab() {
 
 xy_carriage_assembly();
 //y_carriage_slide_assembly();
-
+//x_carriage_assembly();
+//x_carriage_stl();
 
 //y_carriage_end_stl();
 //y_carriage_end_vitamins();

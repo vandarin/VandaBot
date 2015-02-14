@@ -13,3 +13,6 @@ extrusion_diag = sqrt(
 		+ pow(extrusion_size, 2)
 	);
 
+bb_mount_size = max(extrusion_size,ball_bearing_diameter(carriage_bearing)+carriage_clearance);
+carriage_height = bb_mount_size*3;
+carriage_width = max(bb_mount_size,ball_bearing_diameter(carriage_bearing)*2)+extrusion_size+carriage_clearance;
