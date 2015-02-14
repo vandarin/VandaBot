@@ -7,10 +7,14 @@ from stls import stls
 from plates import plates
 
 def make_machine(machine):
+    print("boms.py:")
     boms(machine)
+    print("sheets.py:")
     sheets(machine)
+    print("stls.py:")
     stls(machine)
-    plates(machine)
+    #print("plates.py:")
+    #plates(machine)
 
 if __name__ == '__main__':
     if len(sys.argv) > 1:
