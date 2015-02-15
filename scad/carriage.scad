@@ -19,7 +19,7 @@ module xy_carriage_assembly() {
 		}
 		rotate([90,0,0]) {
 			y_carriage_slide_assembly();
-			y_carriage_end_stl();
+			render() y_carriage_end_stl();
 			y_carriage_end_vitamins();
 		}
 	}
@@ -33,7 +33,7 @@ module xy_carriage_assembly() {
 
 		rotate([-90,180,0]) {
 			y_carriage_slide_assembly();
-			y_carriage_end_stl();
+			render() y_carriage_end_stl();
 			y_carriage_end_vitamins();
 		}
 	}
@@ -46,13 +46,54 @@ module xy_carriage_assembly() {
 
 module x_carriage_assembly() {
 	assembly("x_carriage");
-	x_carriage_stl();
+	render() x_carriage_stl();
 	rotate([45,0,0]) rotate([0,90,0])
 	{
 		carriage_slide_vitamins();
 	}
+	translate([
+		carriage_width/2 + thick_wall/3 ,
+		carriage_width/3 - thick_wall/2,
+		0
+		]) {
+		belt_tie();
+	}
+	translate([
+		-carriage_width/2 - thick_wall/3 ,
+		carriage_width/3 - thick_wall/2,
+		0
+		]) {
+		belt_tie();
+	}
+	translate([
+		carriage_width/2 + thick_wall/3 ,
+		-carriage_width/3 + thick_wall/2,
+		0
+		]) {
+		belt_tie();
+	}
+	translate([
+		-carriage_width/2 - thick_wall/3 ,
+		-carriage_width/3 + thick_wall/2,
+		0
+		]) {
+		belt_tie();
+	}
 	extruder_assembly();
 	end("x_carriage");
+}
+module belt_tie() {
+	translate([0,0,carriage_width/2+ thick_wall + ball_bearing_width(XY_bearing)*4])
+		screw_and_washer(bearing_screw(XY_bearing), screw_longer_than(
+				ball_bearing_width(XY_bearing) * 4
+				+ washer_thickness(screw_washer(bearing_screw(XY_bearing)))*5
+				+ mount_thickness
+				+ nut_thickness(screw_nut(bearing_screw(XY_bearing)))
+				));
+	translate([0,0,carriage_width/2 - thick_wall/2])
+		nut(screw_nut(bearing_screw(XY_bearing)));
+	translate([0,0,carriage_width/2 + thick_wall/2])
+		nut(screw_nut(bearing_screw(XY_bearing)));
 }
 
 module x_carriage_stl() {
@@ -100,21 +141,45 @@ module y_carriage_end_stl() {
 		difference() {
 			union() {
 				translate([-extrusion_size/2 - thick_wall/2,0,0]) {
-				cube(
-					size=[
-						extrusion_size*1.5 + thick_wall,
-						extrusion_size + thick_wall,
-						extrusion_size + thick_wall
-						],
-					center=true
-					);
-				rotate([-45,0,0]) {
-
-					translate([0, 0, extrusion_diag/2])
-					cube(size=[extrusion_size*1.5 + thick_wall, extrusion_diag*3, mount_thickness], center=true);
+					cube(
+						size=[
+							extrusion_size*1.5 + thick_wall,
+							extrusion_size + thick_wall,
+							extrusion_size + thick_wall
+							],
+						center=true
+						);
+					rotate([-45,0,0]) {
+						translate([0, 0, extrusion_diag/2]) {
+							cube(size=[
+								extrusion_size*1.5 + thick_wall,
+								extrusion_diag*2,
+								mount_thickness
+								], center=true);
+							translate([-2 - thick_wall/2 - pulley_od(pulley_type), thick_wall + extrusion_diag/2, 0]) {
+								cylinder(h=mount_thickness, d=15, center=true);
+							}
+							translate([-2 - thick_wall/2 - pulley_od(pulley_type), -thick_wall - extrusion_diag/2, 0]) {
+								cylinder(h=mount_thickness, d=15, center=true);
+							}
+						}
 					}
 				}
-			}
+			translate([-extrusion_size/2-thick_wall/2, extrusion_size/2 + thick_wall/2 , thick_wall/2])
+				rotate([-20,0,0])
+				rotate([0,90,0])
+					fillet(mount_thickness, extrusion_size*1.5 + thick_wall);
+
+			translate([-extrusion_size/2-thick_wall/2, thick_wall/2 , extrusion_size/2 + thick_wall/2])
+				rotate([110,0,0])
+				rotate([0,-90,0])
+					fillet(mount_thickness, extrusion_size*1.5 + thick_wall);
+			} // end union
+			//cut off the triangle on top
+
+			rotate([-45,0,0])
+				translate([-extrusion_size/2 - thick_wall/2, 0, extrusion_diag/2 + mount_thickness - eta])
+					cube(size=[55,55,5], center=true);
 			// extrusion
 			translate([thick_wall/2,0,0])
 			cube([extrusion_size*2.5+thick_wall,extrusion_size,extrusion_size], center=true);
@@ -128,7 +193,7 @@ module y_carriage_end_stl() {
 				}
 			}
 			// pulley_tower holes
-			translate([-carriage_width - extrusion_size, 0,0]) {
+			translate([-carriage_width - extrusion_size - pulley_od(pulley_type), 0,0]) {
 				rotate([45, 0, 0]) {
 
 					y_pulley_placement() screw_hole(frame_thick_screw, mount_thickness*2);
@@ -142,7 +207,7 @@ module y_carriage_end_stl() {
 		translate([-carriage_width/2 - thick_wall/4*3,0,0])
 			rotate([90,180,0])
 			resize(newsize=[0, 0, thick_wall*2])
-			carriage_tab();
+			render () carriage_tab();
 	}
 }
 module y_carriage_end_vitamins() {
@@ -165,10 +230,18 @@ module y_carriage_end_vitamins() {
 }
 
 module y_pulley_placement() {
-	translate([carriage_width-thick_wall + pulley_od(pulley_type),thick_wall/2 + extrusion_diag/2, -extrusion_diag])
+	translate([
+		carriage_width-thick_wall*2 + pulley_od(pulley_type),
+		thick_wall/2 + extrusion_diag/2,
+		-carriage_width/3 + thick_wall/2 - pulley_od(pulley_type)/2 //-extrusion_diag
+		])
 		rotate([-90,0,0])
 		children();
-	translate([carriage_width-thick_wall,thick_wall/2 + extrusion_diag/2, extrusion_diag])
+	translate([
+		carriage_width-thick_wall*2 +  pulley_od(pulley_type),
+		thick_wall/2 + extrusion_diag/2,
+		carriage_width/3 - thick_wall/2 + pulley_od(pulley_type)/2 //extrusion_diag
+		])
 		rotate([-90,0,0])
 		children();
 }
@@ -179,10 +252,10 @@ module y_carriage_slide_stl() {
 	render() carriage_slide();
 	translate([carriage_width/2-thick_wall/2,-thick_wall*1.5,0])
 		rotate([90,0,0])
-		carriage_tab();
+		render() carriage_tab();
 	translate([carriage_width/2-thick_wall/2,thick_wall*1.5,0])
 		rotate([90,0,0])
-		carriage_tab();
+		render() carriage_tab();
 }
 module carriage_slide_vitamins() {
 	%cube([extrusion_size,extrusion_size,carriage_height*2], center=true);
@@ -239,29 +312,41 @@ module carriage_slide() {
 					carriage_width+thick_wall+l_hinge_width*2,
 					carriage_height,carriage_clearance/4*3
 					);
-				difference() {
-					// inner shell
-					roundedBox(
-						carriage_width-thick_wall*2,
-						carriage_width+l_hinge_width*2 - thick_wall/2,
-						carriage_height+10,
-						carriage_clearance/2
-						);
-				}
+				// inner shell
+				roundedBox(
+					carriage_width-thick_wall*2,
+					carriage_width+l_hinge_width*2 - thick_wall/2,
+					carriage_height+10,
+					carriage_clearance/2
+					);
 			}
-		}
+		} // end union
 		// bearing holes top
 		translate([0,0,carriage_height/3])
 		carriage_layout() {
 			translate([0,0,-bb_mount_size+nut_thickness(screw_nut(bearing_screw(carriage_bearing)))*2])
 			nut_trap(screw_radius(bearing_screw(carriage_bearing)), nut_radius(screw_nut(bearing_screw(carriage_bearing))), nut_thickness(screw_nut(bearing_screw(carriage_bearing))));
 		}
-
 		// bearing holes bottom
 		translate([0,0,-carriage_height/3])
 		carriage_layout() {
 			translate([0,0,-bb_mount_size+nut_thickness(screw_nut(bearing_screw(carriage_bearing)))*2])
 				nut_trap(screw_radius(bearing_screw(carriage_bearing)), nut_radius(screw_nut(bearing_screw(carriage_bearing))), nut_thickness(screw_nut(bearing_screw(carriage_bearing))));
+		}
+		translate([thick_wall/3*2, -thick_wall/3*2, 0])
+		rotate([0,0,45]) {
+			translate([carriage_width/3 - thick_wall/2, carriage_width/2 + thick_wall/2, -carriage_width/2 - thick_wall/3])
+				rotate([90,0,0])
+					nut_trap(screw_radius(frame_thick_screw), nut_radius(screw_nut(frame_thick_screw)), nut_thickness(screw_nut(frame_thick_screw)));
+				translate([carriage_width/3 - thick_wall/2, carriage_width/2 + thick_wall/2, carriage_width/2 + thick_wall/3])
+				rotate([90,0,0])
+					nut_trap(screw_radius(frame_thick_screw), nut_radius(screw_nut(frame_thick_screw)), nut_thickness(screw_nut(frame_thick_screw)));
+				translate([-carriage_width/3 + thick_wall/2, carriage_width/2 + thick_wall/2, -carriage_width/2 - thick_wall/3])
+				rotate([90,0,0])
+					nut_trap(screw_radius(frame_thick_screw), nut_radius(screw_nut(frame_thick_screw)), nut_thickness(screw_nut(frame_thick_screw)));
+				translate([-carriage_width/3 + thick_wall/2, carriage_width/2 + thick_wall/2, carriage_width/2 + thick_wall/3])
+				rotate([90,0,0])
+					nut_trap(screw_radius(frame_thick_screw), nut_radius(screw_nut(frame_thick_screw)), nut_thickness(screw_nut(frame_thick_screw)));
 		}
 	}
 }
@@ -304,6 +389,7 @@ module carriage_tab() {
 		}
 }
 
+//carriage_slide();
 xy_carriage_assembly();
 //y_carriage_slide_assembly();
 //x_carriage_assembly();

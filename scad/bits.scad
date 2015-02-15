@@ -63,10 +63,3 @@ module pulley_tower(double = true) {
 }
 
 
-module NEMA_all_holes(type) {
-	cylinder(h=mount_thickness*2, r=NEMA_big_hole(type), center=true);
-		for(x = NEMA_holes(type))
-	        for(y = NEMA_holes(type))
-	            translate([x, y, 0])
-	                cylinder(r = 3/2, h = mount_thickness*2, center = true);
-}

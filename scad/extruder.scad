@@ -247,11 +247,16 @@ module extruder_assembly() {
 			}
 			translate([15.5,-26,10 + hotend_offset])
 			screw_and_washer(M3_pan_screw, screw_longer_than(total_thickness));
+			translate([15.5,-26, hotend_offset - total_thickness])
+			nut(screw_nut(M3_pan_screw));
 			translate([-15.5 + 8,-26,10 + hotend_offset])
 			screw_and_washer(M3_pan_screw, screw_longer_than(total_thickness));
+			translate([-15.5 + 8,-26,10 + hotend_offset - total_thickness])
+			nut(screw_nut(M3_pan_screw));
 		}
 	vitamin("E3D v6 Extruder");
-	color("Red", 0.5)
+	color("LightBlue", 0.5)
+	render()
 	translate([4.5, -carriage_width/2 - hotend_radius - hotend_offset/2, -5]) {
 		cylinder(h=200, d=1.8, center=true);
 		cylinder(h=62, d=29, center=true, $fn=12);

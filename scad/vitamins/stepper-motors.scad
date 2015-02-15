@@ -84,3 +84,12 @@ module NEMA_screws(motor, n = 4, screw_length = 8, screw_type = M3_pan_screw) {
             translate([motor[8]/2, motor[8]/2, 0])
                 screw_and_washer(screw_type, screw_length, true);
 }
+
+
+module NEMA_all_holes(type) {
+    cylinder(h=mount_thickness*2, r=NEMA_big_hole(type), center=true);
+        for(x = NEMA_holes(type))
+            for(y = NEMA_holes(type))
+                translate([x, y, 0])
+                    cylinder(r = 3/2, h = mount_thickness*2, center = true);
+}
