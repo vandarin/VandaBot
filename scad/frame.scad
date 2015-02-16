@@ -1,6 +1,6 @@
 include <conf/config.scad>
 include <_positions.scad>
-use <motor_mount.scad>
+use <xy_motor_mount.scad>
 use <bits.scad>
 
 module frame_assembly() {
