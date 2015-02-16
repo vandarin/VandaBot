@@ -1,7 +1,5 @@
 
 
-// OUTSIDE DIMENSIONS
-dimensions = [350,400,350];
 extrusion_size = 0.75 * 25.4; // 3/4 inch tube
 frame_corner_thickness = 3;
 mount_thickness = 5;
@@ -12,16 +10,17 @@ printed_plastic_color = "yellow";
 
 
 echo("VandaBot:");
+echo(str("Outside dimensions: ", dimensions.x, "mm x ", dimensions.y, "mm x ", dimensions.z, "mm"));
+echo(str("Build envelope: ", envelope_dimensions.x, "mm x ", envelope_dimensions.y, "mm x ", envelope_dimensions.z, "mm"));
 
 //hot_end = E3Dv6;
 hotend_radius = 15;
 hotend_offset = 9.4; // from extruder STL
-X_travel = 150;
-Y_travel = 150;
-Z_travel = 150;
+hotend_height = 62; // from E3Dv6 documentation
 
-bed_depth = 164;
-bed_width = 114;
+
+bed_depth = 214;
+bed_width = 314;
 bed_pillars = M3x20_pillar;
 bed_glass = glass2;
 bed_thickness = pcb_thickness + sheet_thickness(bed_glass);    // PCB heater plus glass sheet
@@ -34,6 +33,15 @@ base_nuts = true;
 frame = DiBond;
 frame_corners = 25;
 frame_nuts = true;
+// Printing envelope
+envelope_dimensions = [
+	bed_width + 70,
+	bed_depth + 70,
+	350
+	];
+X_travel = envelope_dimensions.x;
+Y_travel = envelope_dimensions.y;
+Z_travel = envelope_dimensions.z;
 
 case_fan = fan80x38;
 part_fan = fan40x11;

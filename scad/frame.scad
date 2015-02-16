@@ -239,7 +239,7 @@ module xy_pulley_assembly() {
 	assembly("xy_pulley");
 	xy_pulley_mount_stl();
 	frame_corner_screws(frame_corner_top_holes());
-	translate([-motor_offset(XY_motor), motor_offset(XY_motor), extrusion_diag/2]) {
+	translate([-motor_offset(XY_motor), motor_offset(XY_motor), extrusion_diag/2 + mount_thickness/2]) {
 		pulley_tower();
 	}
 
@@ -250,10 +250,10 @@ module xy_pulley_mount_stl() {
 	difference(){
 		union() {
 			frame_corner();
-			translate([-motor_offset(XY_motor)/2 - extrusion_diag/2, motor_offset(XY_motor)/2 + extrusion_diag/2, extrusion_diag/2 - mount_thickness/2])
+			translate([-motor_offset(XY_motor)/2 - extrusion_diag/2, motor_offset(XY_motor)/2 + extrusion_diag/2, extrusion_diag/2])
 				cube(size = [motor_offset(XY_motor), motor_offset(XY_motor), mount_thickness], center=true);
 		}
-		translate([-motor_offset(XY_motor), motor_offset(XY_motor), extrusion_diag/2 + mount_thickness/2])
+		translate([-motor_offset(XY_motor), motor_offset(XY_motor), extrusion_diag/2 + mount_thickness/2+ eta])
 			screw_hole(bearing_screw(XY_bearing),screw_longer_than(mount_thickness));
 	}
 }
