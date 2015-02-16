@@ -257,35 +257,30 @@ module y_carriage_slide_stl() {
 		rotate([90,0,0])
 		render() carriage_tab();
 }
-module carriage_slide_vitamins() {
+module carriage_slide_vitamins(hinged = true) {
 	%cube([extrusion_size,extrusion_size,carriage_height*2], center=true);
 
-	translate([0,0,carriage_height/3])
+	// bearings, screws and nuts
+	for(i=[1,-1]) {
+	translate([0,0,(carriage_height/3 - thick_wall/2) * i])
 		carriage_layout() {
 			ball_bearing(carriage_bearing);
 			translate([0,0,ball_bearing_width(carriage_bearing)/2])
 				screw(
-				bearing_screw(carriage_bearing), screw_longer_than(ball_bearing_width(carriage_bearing) + carriage_clearance*2)
+				bearing_screw(carriage_bearing), screw_longer_than(ball_bearing_width(carriage_bearing) + thick_wall/2 + bb_mount_size/2 + washer_thickness(screw_washer(bearing_screw(carriage_bearing))))
 				);
-			translate([0,0,-screw_longer_than(ball_bearing_width(carriage_bearing))-thick_wall/2])
+			translate([0,0,-screw_longer_than(ball_bearing_width(carriage_bearing) + bb_mount_size/2)])
 			nut(screw_nut(bearing_screw(carriage_bearing)));
 		}
-	translate([0,0,-carriage_height/3])
-	carriage_layout() {
-		ball_bearing(carriage_bearing);
-		translate([0,0,ball_bearing_width(carriage_bearing)/2])
-			screw(
-			bearing_screw(carriage_bearing), screw_longer_than(ball_bearing_width(carriage_bearing) + carriage_clearance*2)
-			);
-		translate([0,0,-screw_longer_than(ball_bearing_width(carriage_bearing))-thick_wall/2])
-			nut(screw_nut(bearing_screw(carriage_bearing)));
 	}
+
+	if(hinged)
 	translate([carriage_width/2 - spring_length(hob_spring)/2, -carriage_width/2 + spring_length(hob_spring)/2, 0])
 	rotate([90,0,45])
 	comp_spring(hob_spring);
 }
 
-module carriage_slide() {
+module carriage_slide(hinged=true) {
 	difference () {
 		union() {
 			intersection() {
@@ -301,52 +296,64 @@ module carriage_slide() {
 				roundedBox(carriage_width+thick_wall,carriage_width+thick_wall,carriage_height,carriage_clearance/4*3);
 			}
 			translate([extrusion_diag/2 + ball_bearing_diameter(carriage_bearing)/4,-extrusion_diag/2 - ball_bearing_diameter(carriage_bearing)/3,0])
+			if(hinged)
 			rotate([0,0,45])
 			living_hinge(carriage_width, carriage_height);
 			rotate([0,0,45])
-			translate([0,-l_hinge_width,0])
+			translate([0,(hinged ? -l_hinge_width : 0),0])
 			difference() {
 				// outer shell
 				roundedBox(
 					carriage_width,
-					carriage_width+thick_wall+l_hinge_width*2,
+					carriage_width+thick_wall*2+(hinged ? l_hinge_width*2 : 0),
 					carriage_height,carriage_clearance/4*3
 					);
 				// inner shell
 				roundedBox(
 					carriage_width-thick_wall*2,
-					carriage_width+l_hinge_width*2 - thick_wall/2,
+					carriage_width + (hinged ? l_hinge_width*2 : 0),
 					carriage_height+10,
 					carriage_clearance/2
 					);
 			}
 		} // end union
-		// bearing holes top
-		translate([0,0,carriage_height/3])
-		carriage_layout() {
-			translate([0,0,-bb_mount_size+nut_thickness(screw_nut(bearing_screw(carriage_bearing)))*2])
-			nut_trap(screw_radius(bearing_screw(carriage_bearing)), nut_radius(screw_nut(bearing_screw(carriage_bearing))), nut_thickness(screw_nut(bearing_screw(carriage_bearing))));
+		// bearing holes
+		for(i=[1,-1]) {
+			translate([0,0,i*(carriage_height/3 - thick_wall/2)])
+			carriage_layout() {
+				translate([0,0,-bb_mount_size + thick_wall/2 ]) {
+					// doubled so we can use shorter screws
+					nut_trap(screw_radius(bearing_screw(carriage_bearing)), nut_radius(screw_nut(bearing_screw(carriage_bearing))), nut_thickness(screw_nut(bearing_screw(carriage_bearing))));
+					translate([0,0,-thick_wall/2])
+					nut_trap(screw_radius(bearing_screw(carriage_bearing)), nut_radius(screw_nut(bearing_screw(carriage_bearing))), nut_thickness(screw_nut(bearing_screw(carriage_bearing))));
+
+				}
+			}
 		}
-		// bearing holes bottom
-		translate([0,0,-carriage_height/3])
-		carriage_layout() {
-			translate([0,0,-bb_mount_size+nut_thickness(screw_nut(bearing_screw(carriage_bearing)))*2])
-				nut_trap(screw_radius(bearing_screw(carriage_bearing)), nut_radius(screw_nut(bearing_screw(carriage_bearing))), nut_thickness(screw_nut(bearing_screw(carriage_bearing))));
+		// X carriage nut traps
+		if(hinged) {
+			translate([thick_wall/3*2, -thick_wall/3*2, 0])
+			rotate([0,0,45]) {
+				for(i=[1,-1]) { for(j=[1,-1]){
+
+				translate([i*(carriage_width/3 - thick_wall/2), carriage_width/2 + thick_wall/2, j*(carriage_width/2 + thick_wall/3)])
+					rotate([90,0,0])
+						nut_trap(screw_radius(frame_thick_screw), nut_radius(screw_nut(frame_thick_screw)), nut_thickness(screw_nut(frame_thick_screw)));
+					}}
+			}
 		}
-		translate([thick_wall/3*2, -thick_wall/3*2, 0])
-		rotate([0,0,45]) {
-			translate([carriage_width/3 - thick_wall/2, carriage_width/2 + thick_wall/2, -carriage_width/2 - thick_wall/3])
-				rotate([90,0,0])
+		// Z carriage nut traps
+		if(!hinged) {
+			rotate([0,0,45]) {
+				difference() {
+					for(i=[1,-1]) {	for(j=[1,-1]) {
+					translate([j * (carriage_width/2 - thick_wall*1.25), i * (carriage_width/2 - thick_wall), 0])
+					rotate([90,0,90])
 					nut_trap(screw_radius(frame_thick_screw), nut_radius(screw_nut(frame_thick_screw)), nut_thickness(screw_nut(frame_thick_screw)));
-				translate([carriage_width/3 - thick_wall/2, carriage_width/2 + thick_wall/2, carriage_width/2 + thick_wall/3])
-				rotate([90,0,0])
-					nut_trap(screw_radius(frame_thick_screw), nut_radius(screw_nut(frame_thick_screw)), nut_thickness(screw_nut(frame_thick_screw)));
-				translate([-carriage_width/3 + thick_wall/2, carriage_width/2 + thick_wall/2, -carriage_width/2 - thick_wall/3])
-				rotate([90,0,0])
-					nut_trap(screw_radius(frame_thick_screw), nut_radius(screw_nut(frame_thick_screw)), nut_thickness(screw_nut(frame_thick_screw)));
-				translate([-carriage_width/3 + thick_wall/2, carriage_width/2 + thick_wall/2, carriage_width/2 + thick_wall/3])
-				rotate([90,0,0])
-					nut_trap(screw_radius(frame_thick_screw), nut_radius(screw_nut(frame_thick_screw)), nut_thickness(screw_nut(frame_thick_screw)));
+					} }
+					cube(size=[extrusion_size, carriage_width*2,extrusion_size], center=true);
+				}
+			}
 		}
 	}
 }

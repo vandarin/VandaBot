@@ -43,9 +43,9 @@ module bed_assembly(y = 0) {
     // Substrate
     translate([0,0, -extrusion_size/2 - washer_thickness(M3_washer)*2]) {
         for (i = [-1,1]) {
-            translate([i*(bed_width/2 + extrusion_size), 0, 0])
+            translate([i*(bed_width/2 + extrusion_size), (dimensions.y/2 - bed_depth/2)/2 - extrusion_size/4 + thick_wall/2, 0])
             rotate([90, 0, 0])
-            square_tube(tube_dimensions, bed_depth + extrusion_size);
+            square_tube(tube_dimensions, bed_depth/2 + dimensions.y/2 + extrusion_size/2 + thick_wall);
             vitamin("CB40: Corner Brace");
         }
         for (i = [-1,1]) {
