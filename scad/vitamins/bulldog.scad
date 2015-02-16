@@ -28,7 +28,7 @@ module bulldog_shape(depth, height, radius, open) {
 module shell(length, width, height, wall) {
     difference() {
         linear_extrude(height = height, center = true, convexity = 5)
-            child();
+            children();
         linear_extrude(height = height + 1, center = true, convexity = 5)
             difference() {
                 square([length - 2 * wall, width - 2 * wall], center = true);
@@ -37,7 +37,7 @@ module shell(length, width, height, wall) {
                         square([length + 1, width + 1], center = true);
                         translate([10,0])
                             square([length + 1, 2 * wall + eta], center = true);
-                        child();
+                        children();
                      }
                      circle(r = wall, center = true);
                 }

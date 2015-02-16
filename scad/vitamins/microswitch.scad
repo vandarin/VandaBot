@@ -20,7 +20,7 @@ module microswitch_hole_positions()
 {
     for(x = [microswitch_first_hole_x_offset(), 7.5])
          translate([x, microswitch_hole_y_offset(), microswitch_thickness() / 2])
-              child();
+              children();
 }
 
 module microswitch_holes(r = No2_pilot_radius, h = 7.5)

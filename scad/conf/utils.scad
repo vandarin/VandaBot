@@ -157,7 +157,7 @@ module tube(or, ir, h, center = true) {
 module explode(v, offset = [0,0,0]) {
     if(exploded) {
         translate(v * exploded)
-            child();
+            children();
         render() hull() {
             sphere(0.2);
             translate(v * exploded + offset)
@@ -165,7 +165,7 @@ module explode(v, offset = [0,0,0]) {
         }
     }
     else
-        child();
+        children();
 }
 //
 // Restore the view point
@@ -177,4 +177,4 @@ module view(t,r,d = 1000)
                 rotate([0, -r[1], 0])
                     rotate([0, 0, -r[2]])
                         translate(-t)
-                            child();
+                            children();

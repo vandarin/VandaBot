@@ -104,7 +104,6 @@ thermistor_wires_hole_radius = wire_hole_radius(thermistor_wires);
 
 cnc_sheets = false;                 // If sheets are cut by CNC we can use slots, etc instead of just round holes
 base_nuts = false;                  // Need something under the base if using nuts
-pulley_type = T5x8_plastic_pulley;
 clip_handles = true;
 include_fan = false;
 squeeze = false;                    // Bodge to make Huxley as small as possible without affecting dibond kits
@@ -123,19 +122,8 @@ washer = screw_washer(cap_screw);
 bearing_clamp_tab = cnc_sheets ? (nut_radius(nut) + 3 * filament_width) * 2 : washer_diameter(washer) + 2;   // how much the lugs stick out and their width
 bearing_clamp_tab_height = 4;           // thickness of the lugs
 
-hole_edge_clearance = 5;                // how close a hole can be to the edge of a sheet
-base_clearance = cnc_sheets ? 1 : 2;    // how close we get to the edge of the base
-axis_end_clearance = cnc_sheets ? 1 : 2;// how close we get to the end of an axis
-limit_switch_offset = 1;                // the over travel to reach the limit switch
-X_carriage_clearance = 2;               // how close the X carriage is to the XZ plane
-                                        // how close the Y carriage is to the window in the XZ plane
-Y_carriage_clearance = 2 + (clip_handles ? (bulldog_handle_length(small_bulldog) - (Y_carriage_width - bed_width) / 2) : 0);
-Z_clearance = 10;                       // How close the top of the object gets to the gantry
-belt_clearance = 0.2;                   // clearance of belt clamp slots
-
-
 extruder_ways = 4 + 6 + 2 + 1 + 1;      // motor + heater(x3) + thermistor + probe + fan = 14
-x_end_ways = extruder_ways + 4 + 2;     // motor plus limit switch = 20
+
 bed_ways = 24 + 2;                      // twelve each way for the current plus a thermistor
 
 module wire_hole_or_slot(r) {

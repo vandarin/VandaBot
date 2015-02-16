@@ -72,7 +72,7 @@ module fan_hole_positions(type) {
     for(x = [-hole_pitch, hole_pitch])
         for(y = [-hole_pitch, hole_pitch])
             translate([x, y, fan_depth(type) / 2])
-                child();
+                children();
 }
 
 module fan_holes(type, poly = false) {

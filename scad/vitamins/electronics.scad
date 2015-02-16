@@ -31,7 +31,7 @@ module controller_screw_positions(type) {
         assign(x = [inset, controller_width(type) - inset][$i % 2])
         assign(y = [inset, controller_length(type) - inset][$i / 2])
             translate([x, y, 0])
-                child();
+                children();
 }
 
 module controller(type) {
@@ -133,5 +133,5 @@ module psu(type) {
 module psu_screw_positions(type) {
     for(point = psu_hole_list(type))
         translate(point)
-            child();
+            children();
 }
