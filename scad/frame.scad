@@ -114,28 +114,28 @@ module frame_corners() {
 			// FRONT BOTTOM RIGHT
 			translate([frame_offset.x,-frame_offset.y, -frame_offset.z]) {
 				rotate([0,90,0]) {
-					frame_corner_bottom_stl();
+					render() frame_corner_bottom_stl();
 					frame_corner_screws(frame_corner_bottom_holes());
 				}
 			}
 			// FRONT BOTTOM LEFT
 			translate([-frame_offset.x,-frame_offset.y, -frame_offset.z]) {
 				rotate([0,90,-90]) {
-					frame_corner_bottom_stl();
+					render() frame_corner_bottom_stl();
 					frame_corner_screws(frame_corner_bottom_holes());
 				}
 			}
 			// BACK BOTTOM RIGHT
 			translate([frame_offset.x,frame_offset.y, -frame_offset.z]) {
 				rotate([90,0,90]) {
-					frame_corner_bottom_stl();
+					render() frame_corner_bottom_stl();
 					frame_corner_screws(frame_corner_bottom_holes());
 				}
 			}
 			// BACK BOTTOM LEFT
 			translate([-frame_offset.x,frame_offset.y, -frame_offset.z]) {
 				rotate([90,0,180]) {
-					frame_corner_bottom_stl();
+					render() frame_corner_bottom_stl();
 					frame_corner_screws(frame_corner_bottom_holes());
 				}
 			}
@@ -237,7 +237,7 @@ module frame_corner_screws(holes) {
 
 module xy_pulley_assembly() {
 	assembly("xy_pulley");
-	xy_pulley_mount_stl();
+	render() xy_pulley_mount_stl();
 	frame_corner_screws(frame_corner_top_holes());
 	translate([-motor_offset(XY_motor), motor_offset(XY_motor), extrusion_diag/2 + mount_thickness/2]) {
 		pulley_tower();

@@ -7,7 +7,7 @@ function motor_offset(type) = NEMA_width(type)/2 + XY_motor_clearance + extrusio
 module xy_motor_assembly(type = XY_motor) {
 	assembly("xy_motor");
 	frame_corner_screws(frame_corner_top_holes());
-	xy_motor_mount_stl(type);
+	render() xy_motor_mount_stl(type);
 	translate([-motor_offset(type),motor_offset(type),extrusion_diag/2 -mount_thickness/2]) {
 		NEMA(type);
 		translate([0, 0, mount_thickness]) {
@@ -21,7 +21,7 @@ module xy_motor_assembly(type = XY_motor) {
 
 module xy_motor_mount_stl(type = XY_motor) {
 	stl("xy_motor_mount");
-	render() frame_corner();
+	frame_corner();
 	translate([-motor_offset(type),motor_offset(type),extrusion_diag/2])
 	difference() {
 		union() {
