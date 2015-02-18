@@ -41,20 +41,30 @@ module bed_assembly(y = 0) {
                 sphere();
 
     // Substrate
+    assembly("Bed Frame");
     translate([0,0, -extrusion_size/2 - washer_thickness(M3_washer)*2]) {
         for (i = [-1,1]) {
             translate([i*(bed_width/2 + extrusion_size), (dimensions.y/2 - bed_depth/2)/2 - extrusion_size/4 + thick_wall/2, 0])
             rotate([90, 0, 0])
             square_tube(tube_dimensions, bed_depth/2 + dimensions.y/2 + extrusion_size/2 + thick_wall);
             vitamin("CB40: Corner Brace");
+            for(j = [-1 : 2]) {
+                translate([j*screw_boss_diameter(frame_thick_screw), i*screw_boss_diameter(frame_thick_screw), 0])
+                screw_and_washer(frame_thick_screw, 10);
+            }
         }
         for (i = [-1,1]) {
             translate([0,i*(bed_depth/2), 0])
             rotate([0, 90, 0])
             square_tube(tube_dimensions, bed_width + extrusion_size);
             vitamin("CB40: Corner Brace");
+            for(j = [-1 : 2]) {
+                translate([j*screw_boss_diameter(frame_thick_screw), i*screw_boss_diameter(frame_thick_screw)*2, 0])
+                screw_and_washer(frame_thick_screw, 10);
+            }
         }
     }
+    end("Bed Frame");
 
     //
     // PCB, glass and clips
