@@ -18,7 +18,7 @@ dimensions = [
 	envelope_dimensions.x + carriage_width*3 + (extrusion_size*1.5 + thick_wall + screw_boss_diameter(frame_thick_screw)*2),
 	//										corner mounts
 	envelope_dimensions.y + carriage_height*2 + extrusion_diag * 3,
-	envelope_dimensions.z + extrusion_diag + hotend_height + carriage_width + 50
+	envelope_dimensions.z + extrusion_diag + hotend_height + carriage_width + carriage_height
 	];
 
 frame_offset = [
