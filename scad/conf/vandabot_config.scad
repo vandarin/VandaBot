@@ -12,7 +12,7 @@ printed_plastic_color = "yellow";
 echo("VandaBot:");
 echo(str("Outside dimensions: ", dimensions.x, "mm x ", dimensions.y, "mm x ", dimensions.z, "mm"));
 echo(str("Build envelope: ", envelope_dimensions.x, "mm x ", envelope_dimensions.y, "mm x ", envelope_dimensions.z, "mm"));
-
+echo(str("Carriage dimensions: ", carriage_width, "mm x ", carriage_height, "mm"));
 //hot_end = E3Dv6;
 hotend_radius = 15;
 hotend_offset = 9.4; // from extruder STL
