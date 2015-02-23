@@ -92,7 +92,7 @@ module bed_assembly(y = 0) {
         rotate([-90, 0, 0])
             sleeved_resistor(EpcosBlue, PTFE07, heatshrink = HSHRNK16);
 
-    #for(i = [-1, 1]) {
+    for(i = [-1, 1]) {
         translate([i * 10, bed_depth / 2 - y + 17.5, -(extrusion_size / 2) + 3.4])
             rotate([90, 0, 0])
                 tubing(HSHRNK64, 30);

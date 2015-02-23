@@ -178,3 +178,9 @@ module view(t,r,d = 1000)
                     rotate([0, 0, -r[2]])
                         translate(-t)
                             children();
+
+module engrave(letter) {
+    cube();
+    linear_extrude(height=5, center=true)
+    text(text=letter, halign="center", valign="center");
+}

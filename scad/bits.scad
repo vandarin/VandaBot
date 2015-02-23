@@ -15,6 +15,18 @@ module printed_axle(id,od,l) {
 		poly_cylinder(id/2,l+eta, center=true);
 	}
 }
+module printed_washer_stl(ball_bearing, screw) {
+	stl(str("printed_washer_", ball_bearing[3], "_", screw[0]));
+	difference() {
+		union() {
+			translate([0,0,1])
+			cylinder(h=1, d1=ball_bearing[1] - 2, d2=ball_bearing[0] + 2, center=true);
+			cylinder(h=1, d=ball_bearing[1] + 4, center=true);
+		}
+		translate([0,0,2])
+			screw_hole(screw, screw_longer_than(3));
+	}
+}
 
 module living_hinge(length,height) {
 	for(x = [-length/2+l_hinge_thickness*10 : l_hinge_thickness *10 : length/2-l_hinge_thickness*10]) {
@@ -63,3 +75,4 @@ module pulley_tower(double = true) {
 }
 
 
+//printed_washer_stl(BB608,M3_cap_screw);
