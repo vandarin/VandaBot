@@ -170,6 +170,8 @@ module frame_corner(angled = true) {
 						],
 					center=true
 				);
+			// cover the tiny hole between previous cubes
+			cube(size=[extrusion_size,extrusion_size,extrusion_size+frame_corner_thickness*2], center=true);
 			translate([0,0,-position])
 			cube([base_size,base_size,position*(angled ? 2 : 3)], center=true);
 				} // end inner union
@@ -283,7 +285,7 @@ function frame_corner_bottom_holes() = [
 	];
 
 
-if (false) {
+if (true) {
 	frame_corner_bottom_stl();
 	frame_corner_screws(frame_corner_bottom_holes());
 

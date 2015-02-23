@@ -13,6 +13,7 @@ echo("VandaBot:");
 echo(str("Outside dimensions: ", dimensions.x, "mm x ", dimensions.y, "mm x ", dimensions.z, "mm"));
 echo(str("Build envelope: ", envelope_dimensions.x, "mm x ", envelope_dimensions.y, "mm x ", envelope_dimensions.z, "mm"));
 echo(str("Carriage dimensions: ", carriage_width, "mm x ", carriage_height, "mm"));
+echo(str("Extrusion size: ", tube_dimensions.x, "mm x ", tube_dimensions.y, "mm x ", tube_dimensions.z, "mm"));
 //hot_end = E3Dv6;
 hotend_radius = 15;
 hotend_offset = 9.4; // from extruder STL
@@ -63,7 +64,7 @@ pulley_type = GT2x20_metal_pulley;
 
 XY_belt = GT2;
 XY_motor = NEMA17;
-XY_motor_clearance = 5;
+motor_clearance = 5;
 XY_bearing = BBF624;
 carriage_bearing = BB623;
 
@@ -73,6 +74,8 @@ Z_bearing = BB608;
 E_motor = NEMA17;
 E_motor_clearance = 2;
 
+
+printed_washer_type = [Z_bearing, M3_cap_screw];
 //
 // Default screw use where size doesn't matter
 //

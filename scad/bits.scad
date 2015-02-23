@@ -15,16 +15,16 @@ module printed_axle(id,od,l) {
 		poly_cylinder(id/2,l+eta, center=true);
 	}
 }
-module printed_washer_stl(ball_bearing, screw) {
-	stl(str("printed_washer_", ball_bearing[3], "_", screw[0]));
+module printed_washer_stl() {
+	stl("printed_washer");
 	difference() {
 		union() {
 			translate([0,0,1])
-			cylinder(h=1, d1=ball_bearing[1] - 2, d2=ball_bearing[0] + 2, center=true);
-			cylinder(h=1, d=ball_bearing[1] + 4, center=true);
+			cylinder(h=1, d1=printed_washer_type[0][1] - 2, d2=printed_washer_type[0][0] + 2, center=true);
+			cylinder(h=1, d=printed_washer_type[0][1] + 4, center=true);
 		}
 		translate([0,0,2])
-			screw_hole(screw, screw_longer_than(3));
+			screw_hole(printed_washer_type[1], screw_longer_than(3));
 	}
 }
 

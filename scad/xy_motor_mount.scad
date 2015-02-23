@@ -2,7 +2,7 @@ include <conf/config.scad>
 include <_positions.scad>
 use <frame.scad>
 
-function motor_offset(type) = NEMA_width(type)/2 + XY_motor_clearance + extrusion_diag/2;
+function motor_offset(type) = NEMA_width(type)/2 + motor_clearance + extrusion_diag/2;
 
 module xy_motor_assembly(type = XY_motor) {
 	assembly("xy_motor");
@@ -28,8 +28,8 @@ module xy_motor_mount_stl(type = XY_motor) {
 			color(plastic_part_color("Yellow")) {
 			cube(
 				[
-				NEMA_width(type) + XY_motor_clearance*2,
-				NEMA_width(type) + XY_motor_clearance*2,
+				NEMA_width(type) + motor_clearance*2,
+				NEMA_width(type) + motor_clearance*2,
 				mount_thickness
 				],
 				center=true
