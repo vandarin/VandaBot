@@ -10,6 +10,7 @@
 
 include <conf/config.scad>
 include <_positions.scad>
+use <bits.scad>
 
 module bed_assembly(y = 0) {
     assembly("Bed");
@@ -87,6 +88,12 @@ module bed_assembly(y = 0) {
                         bulldog(small_bulldog, pcb_thickness + sheet_thickness(bed_glass));
     }
 
+    translate([-1 * (bed_width/2 + extrusion_size*1.5 + thick_wall/2), dimensions.y/2 - extrusion_diag, -extrusion_size/2])
+        rotate([90,0,90])
+        #z_long_belt_clip_stl();
+    translate([bed_width/2 - carriage_width + thick_wall, dimensions.y/2 - extrusion_diag, -extrusion_size/2])
+        rotate([90,0,90])
+        #z_long_belt_clip_stl();
 
     translate([0, 40, pillar_height(bed_pillars) - 1])
         rotate([-90, 0, 0])

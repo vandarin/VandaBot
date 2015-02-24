@@ -35,7 +35,7 @@ module z_assembly() {
 	// left belts
 	translate([
 		-1 *(envelope_dimensions.x/2 -carriage_width - thick_wall/2) - (ball_bearing_diameter(Z_bearing)*2 + extrusion_size/2),
-		dimensions.y/2 - extrusion_diag -extrusion_diag + 4,
+		dimensions.y/2 - extrusion_diag - extrusion_diag + 4,
 		-dimensions.z/2
 		]) {
 			z_belt_lower_assembly();
@@ -44,8 +44,8 @@ module z_assembly() {
 	}
 	// right belts
 	translate([
-		(envelope_dimensions.x/2 -carriage_width - thick_wall/2) - (ball_bearing_diameter(Z_bearing) + extrusion_size/2),
-		dimensions.y/2 - extrusion_diag -extrusion_diag + 4,
+		(envelope_dimensions.x/2 -carriage_width - thick_wall/2) - (ball_bearing_diameter(Z_bearing) + extrusion_size/2) - thick_wall,
+		dimensions.y/2 - extrusion_diag - extrusion_diag + 4,
 		-dimensions.z/2
 		]) {
 			z_belt_lower_assembly(true);
@@ -181,7 +181,7 @@ module z_belt_upper_mount(right=false) {
 		0
 		])
 			rotate([-45,0,0])
-		cube(size=[extrusion_size*4, extrusion_size, extrusion_size], center=true);
+		cube(size=[extrusion_size*4, extrusion_size+eta, extrusion_size+eta], center=true);
 	for(i=[-1,1])
 	translate([0,extrusion_diag/2, i * extrusion_diag*1.75])
 		rotate([0,90,0])
@@ -329,6 +329,7 @@ module z_rail_assembly() {
 			carriage_slide_vitamins(false);
 		}
 	}
+	// mount bed to carriage slide
 	translate([
 		carriage_width/2 + extrusion_size/2 + thick_wall*2,
 		0,
@@ -339,9 +340,17 @@ module z_rail_assembly() {
 			rotate([0, 90, 0]) {
 				translate([0,0,-screw_longer_than(extrusion_size+thick_wall+nut_thickness(screw_nut(frame_thick_screw)))])
 					nut(screw_nut(frame_thick_screw));
-				screw_and_washer(frame_thick_screw, screw_longer_than(extrusion_size+thick_wall+nut_thickness(screw_nut(frame_thick_screw))));
+				translate([0,0,thick_wall/2])
+				screw_and_washer(frame_thick_screw, screw_longer_than(extrusion_size+thick_wall*(i>0 ? 2 : 0)+nut_thickness(screw_nut(frame_thick_screw))));
 			}
+
+
+
 		}
+		// not positioned. need 2 for the right belt clip
+		translate([ -carriage_width, 0, 0]){nut(screw_nut(frame_thick_screw));
+					screw_and_washer(frame_thick_screw, screw_longer_than(thick_wall*2+nut_thickness(screw_nut(frame_thick_screw))));}
+		//echo(str("belt clip extra: ", screw_longer_than(thick_wall*2+nut_thickness(screw_nut(frame_thick_screw)))));
 	}
 	end("Z Rail");
 }

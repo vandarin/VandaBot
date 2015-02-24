@@ -74,5 +74,48 @@ module pulley_tower(double = true) {
 		nut_and_washer(screw_nut(bearing_screw(XY_bearing)),true);
 }
 
+module z_belt_clip_stl() {
+	stl("z_belt_clip");
+	difference() {
+		hull() {
+			for(i=[-1, 1]) {
+				translate([i * (belt_width(Z_belt) + default_wall), 0, 0])
+				cylinder(h=thick_wall, d = belt_width(Z_belt) + default_wall, center=true);
+			}
+		}
+		for(i=[-1,1]) {
+			translate([i * (belt_width(Z_belt) + default_wall), 0, thick_wall])
+			screw_hole(frame_thick_screw, thick_wall*2);
+		}
+		translate([0,0,belt_thickness(Z_belt)/2])
+		cube(size=[belt_width(Z_belt)+1, 50, belt_thickness(Z_belt)+1], center=true);
+		cube(size=[belt_width(Z_belt)+1, belt_thickness(Z_belt)*2 + 1, thick_wall*2], center=true);
+	}
+}
 
+module z_long_belt_clip_stl() {
+	stl("z_long_belt_clip");
+	difference() {
+		hull() {
+			translate([ (carriage_width/2 - thick_wall*1.25), 0, 0])
+				cylinder(h=thick_wall, d = belt_width(Z_belt) + default_wall, center=true);
+
+			translate([ -1 * (carriage_width/2 - thick_wall*1.25 + belt_width(Z_belt)*4), 0, 0])
+				cylinder(h=thick_wall, d = belt_width(Z_belt) + default_wall, center=true);
+		}
+		for(i=[-1,1]) {
+			translate([i * (carriage_width/2 - thick_wall*1.25), 0, thick_wall])
+			screw_hole(frame_thick_screw, thick_wall*2);
+		}
+		translate([-1 * (carriage_width/2 - thick_wall*1.25 + belt_width(Z_belt)*2.5), 0, 0]) {
+
+			translate([0,0,belt_thickness(Z_belt)/2])
+			cube(size=[belt_width(Z_belt)*3.5, 50, belt_thickness(Z_belt)+1], center=true);
+			cube(size=[belt_width(Z_belt)*3.5, belt_thickness(Z_belt)*2 + 1, thick_wall*2], center=true);
+		}
+	}
+}
+//belt_mount(GT2);
 //printed_washer_stl(BB608,M3_cap_screw);
+
+z_long_belt_clip_stl();
