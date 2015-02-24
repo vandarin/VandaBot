@@ -1,4 +1,4 @@
-
+// bom = 2;
 
 extrusion_size = 0.75 * 25.4; // 3/4 inch tube
 frame_corner_thickness = 3;
@@ -68,6 +68,7 @@ motor_clearance = 5;
 XY_bearing = BBF624;
 carriage_bearing = BB623;
 
+Z_belt = GT2;
 Z_motor = NEMA17;
 Z_bearing = BB608;
 

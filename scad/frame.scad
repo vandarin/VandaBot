@@ -29,7 +29,7 @@ module frame_extrusions_top(showInBom=true) {
 	translate([0,frame_offset.y,frame_offset.z])
 		rotate([45,0,0])
 			rotate([0,90,0])
-				square_tube(tube_dimensions, dimensions.x - tube_dimensions.x - frame_corner_thickness*2, showInBom=showInBom);
+				square_tube(tube_dimensions, dimensions.x - extrusion_diag - frame_corner_thickness, showInBom=showInBom);
 	//RIGHT
 	translate([frame_offset.x,0,frame_offset.z])
 		rotate([0,45,0])
@@ -52,7 +52,7 @@ module frame_extrusions_bottom(showInBom=true) {
 	translate([0,frame_offset.y,-frame_offset.z])
 		rotate([0,0,0])
 			rotate([0,90,0])
-				square_tube(tube_dimensions, dimensions.x - tube_dimensions.x - frame_corner_thickness*2, showInBom=showInBom);
+				square_tube(tube_dimensions, dimensions.x - extrusion_diag - frame_corner_thickness, showInBom=showInBom);
 	//RIGHT
 	translate([frame_offset.x,0,-frame_offset.z])
 		rotate([0,0,0])
@@ -287,10 +287,14 @@ function frame_corner_bottom_holes() = [
 
 if (true) {
 	frame_corner_bottom_stl();
-	frame_corner_screws(frame_corner_bottom_holes());
-
+	//frame_corner_screws(frame_corner_bottom_holes());
 } else {
 	xy_pulley_assembly();
-	//frame_corner_screws(frame_corner_top_holes());
-
+	//frame_corner_screws(frame_corner_top_holes());//
 }
+//echo("frame sides");
+//frame_extrusions_sides();
+//echo("frame top");
+//frame_extrusions_top();
+//echo("frame bottom");
+//frame_extrusions_bottom();

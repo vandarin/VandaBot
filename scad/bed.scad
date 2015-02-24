@@ -35,7 +35,7 @@ module bed_assembly(y = 0) {
     //
     // Mark the origin
     //
-    translate([0, 0, pillar_height(bed_pillars) + pcb_thickness + sheet_thickness(bed_glass)])
+    *translate([0, 0, pillar_height(bed_pillars) + pcb_thickness + sheet_thickness(bed_glass)])
         color("green")
             render()
                 sphere();

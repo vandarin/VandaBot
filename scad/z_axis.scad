@@ -11,13 +11,7 @@ module z_assembly() {
 			dimensions.y/2 - extrusion_diag*2 - pulley_width(GT2x20_twin_metal_pulley) + 4,
 			-dimensions.z/2 + NEMA_width(XY_motor)/2 - extrusion_size/2 + frame_corner_thickness
 		]) {
-		rotate([-90,0,0]) {
-			metal_pulley(GT2x20_twin_metal_pulley);
-			NEMA(XY_motor);
-			translate([0,0,mount_thickness/2])
-			NEMA_screws(Z_motor, screw_length = 8 + mount_thickness, screw_type = M3_cap_screw);
-		}
-		render() z_motor_mount_stl();
+		z_motor_mount_assembly();
 	}
 	for (i = [1, -1]) {
 		translate([
@@ -65,6 +59,29 @@ module z_assembly() {
 	end("Z Axis");
 }
 
+module z_motor_mount_assembly() {
+	assembly("Z Motor Mount");
+	rotate([-90,0,0]) {
+			metal_pulley(GT2x20_twin_metal_pulley);
+			NEMA(XY_motor);
+			translate([0,0,mount_thickness/2])
+			NEMA_screws(Z_motor, screw_length = 8 + mount_thickness, screw_type = M3_cap_screw);
+		}
+	render() z_motor_mount_stl();
+	translate([-extrusion_size - NEMA_width(Z_motor)/2, -NEMA_length(Z_motor)/2 - frame_corner_thickness/2, -NEMA_width(XY_motor)/2 + extrusion_size/2 - frame_corner_thickness])
+		z_motor_mount_frame_layout()
+			screw_and_washer(frame_thick_screw, screw_longer_than(frame_corner_thickness + tube_dimensions.z*2));
+	end("Z Motor Mount");
+}
+
+module z_motor_mount_frame_layout() {
+	for(i=[-1,1])
+		translate([0,i*extrusion_size,extrusion_size/2 + frame_corner_thickness])
+		children();
+		translate([-extrusion_size/2 - frame_corner_thickness, 0, 0])
+		rotate([0,-90,0])
+		children();
+}
 module z_motor_mount_stl() {
 	stl("z_motor_mount");
 	//face
@@ -88,8 +105,12 @@ module z_motor_mount_stl() {
 			translate([frame_corner_thickness*1.5,0,0])
 				cube(size=[extrusion_size + frame_corner_thickness*2, NEMA_length(Z_motor)+frame_corner_thickness*2, extrusion_size+ frame_corner_thickness*2], center=true);
 		}
-		translate([-extrusion_size - NEMA_width(Z_motor)/2, -NEMA_length(Z_motor)/2 - frame_corner_thickness/2, -NEMA_width(XY_motor)/2 + extrusion_size/2 - frame_corner_thickness])
+		translate([-extrusion_size - NEMA_width(Z_motor)/2, -NEMA_length(Z_motor)/2 - frame_corner_thickness/2, -NEMA_width(XY_motor)/2 + extrusion_size/2 - frame_corner_thickness]) {
 			cube(size=[extrusion_size, extrusion_size*4, extrusion_size], center=true);
+			z_motor_mount_frame_layout()
+				screw_hole(frame_thick_screw, extrusion_size/2);
+		}
+
 	}
 }
 
@@ -108,6 +129,20 @@ module z_belt_upper_assembly(right=false) {
 	} else {
 		render() z_belt_upper_left_stl();
 	}
+
+	translate([
+		0,
+		extrusion_diag + extrusion_size + frame_corner_thickness+1,
+		0
+		])
+			rotate([-45,0,0]) {
+				cube(size=[extrusion_size*4, extrusion_size, extrusion_size], center=true);
+				for(i=[-1, 1]) {
+				translate([0, (i < 0 ? extrusion_diag/2 : 0), (i > 0 ? extrusion_diag/2 : 0)])
+					rotate([(i < 0 ? -90 : 0), 0, 0])
+					screw_and_washer(frame_thick_screw, screw_longer_than(frame_corner_thickness + tube_dimensions.z));
+				}
+			}
 	end(str("Z Belt Upper ", (right ? "Right" : "Left")));
 }
 
@@ -125,23 +160,33 @@ module z_belt_upper_mount(right=false) {
 
 			}
 		} // end union
+		translate([0, (right ? 1 : -1) * ball_bearing_width(Z_bearing)/2, 0])
+		rotate([90,0,0])
+			screw_hole(M3_cap_screw, screw_longer_than(ball_bearing_width(Z_bearing)*3));
 		translate([
 		0,
 		extrusion_diag + extrusion_size + frame_corner_thickness+1,
 		0
 		])
 			rotate([-45,0,0]) {
-				cube(size=[extrusion_size*4, extrusion_size, extrusion_size], center=true);
-				translate([0,0,extrusion_diag/2])
-				for(i=[1, -1]) {
-					rotate([-45,0,0])
-				translate([0, frame_corner_thickness/2, 0])
-				rotate([45 * i,0,0])
-				translate([0, 0, frame_corner_thickness*2])
-					screw_hole(frame_thick_screw, screw_longer_than(frame_corner_thickness + tube_dimensions.z));
+				for(i=[-1, 1]) {
+				translate([0, (i < 0 ? extrusion_diag/2 : 0), (i > 0 ? extrusion_diag/2 : 0)])
+					rotate([(i < 0 ? -90 : 0), 0, 0])
+					screw_hole(frame_thick_screw, screw_longer_than(frame_corner_thickness*2 + tube_dimensions.z));
 				}
 			}
-	}
+	translate([
+		0,
+		extrusion_diag + extrusion_size + frame_corner_thickness+1,
+		0
+		])
+			rotate([-45,0,0])
+		cube(size=[extrusion_size*4, extrusion_size, extrusion_size], center=true);
+	for(i=[-1,1])
+	translate([0,extrusion_diag/2, i * extrusion_diag*1.75])
+		rotate([0,90,0])
+			cylinder(h=extrusion_size*2, r=extrusion_diag*1.5, center=true);
+	} // end difference
 }
 
 module z_belt_upper_right_stl() {
@@ -216,8 +261,11 @@ module z_belt_lower_mount(right = false) {
 				cylinder(h=ball_bearing_width(Z_bearing), r=Z_bearing[0]/2 - 0.125, center=true, $fn=20);
 		// connector
 		hull() {
-			translate([-ball_bearing_diameter(Z_bearing) - frame_corner_thickness*2 + 1, frame_corner_thickness/2, extrusion_size/2 + Z_bearing[0]])
-				cube(size=[1, frame_corner_thickness, ball_bearing_diameter(Z_bearing)], center=true);
+			translate([-ball_bearing_diameter(Z_bearing) - frame_corner_thickness*2 + 1, frame_corner_thickness/2, extrusion_size/2 + Z_bearing[0]/2])
+				cube(size=[1, frame_corner_thickness, ball_bearing_diameter(Z_bearing)/2 - frame_corner_thickness*2], center=true);
+			translate([-ball_bearing_diameter(Z_bearing), frame_corner_thickness/2, ball_bearing_diameter(Z_bearing)])
+				rotate([90,0,0])
+				cylinder(h=frame_corner_thickness, d=ball_bearing_diameter(Z_bearing)/2, center=true);
 			translate([0,frame_corner_thickness/2,ball_bearing_diameter(Z_bearing)/2]) {
 					rotate([90,0,0])
 					cylinder(h=frame_corner_thickness, d=ball_bearing_diameter(Z_bearing) + 4, center=true);
@@ -238,16 +286,21 @@ module z_belt_lower_mount(right = false) {
 				extrusion_diag + extrusion_size + frame_corner_thickness*4 + (right ? 8 : 0),
 				extrusion_size + frame_corner_thickness*2
 				], center=true);
-			translate([0, -frame_corner_thickness + extrusion_size + (right ? 4 : 0), 0])
+			translate([0, -frame_corner_thickness + extrusion_size + (right ? 4 : 0), 0]) {
+				// tube
 				cube(size=[extrusion_size*4, extrusion_size, extrusion_size], center = true);
-			translate([-extrusion_size/2 - frame_corner_thickness, -extrusion_size*1.5, -extrusion_size - frame_corner_thickness*3])
-				rotate([0,90,0])
-				sphere(r=extrusion_diag+frame_corner_thickness, $fn=48);
-				//cylinder(h=extrusion_diag + frame_corner_thickness, r=extrusion_size, center=true);
+				translate([0,0,extrusion_size/2 + frame_corner_thickness + eta])
+					screw_hole(frame_thick_screw, screw_longer_than(frame_corner_thickness + tube_dimensions.z*2));
+				translate([0,extrusion_size/2 + frame_corner_thickness + 1,0])
+					rotate([-90,0,0])
+					screw_hole(frame_thick_screw, screw_longer_than(frame_corner_thickness + tube_dimensions.z*2));
+			}
+			translate([-extrusion_size/2 - frame_corner_thickness*4, -extrusion_size*1.5, -extrusion_size - frame_corner_thickness*4])
+				sphere(r=extrusion_diag*1.5);
 		}
 	} // end union
 	z_belt_lower_bearing_layout()
-	translate([0,0,ball_bearing_width(Z_bearing)/2])
+	translate([0,0,ball_bearing_width(Z_bearing)/2 + (right ? 8 : 0)])
 		screw_hole(M3_cap_screw, screw_longer_than(ball_bearing_width(Z_bearing) + frame_corner_thickness*2));
 	}
 
@@ -379,7 +432,7 @@ module z_rail_top_layout() {
 
 
 
-//z_assembly();
+z_assembly();
 //z_rail_assembly();
 
 //z_rail_bottom_stl();
@@ -391,4 +444,8 @@ module z_rail_top_layout() {
 //z_belt_lower_assembly();
 //z_motor_mount_stl();
 
-z_belt_lower_assembly(true);
+//z_belt_lower_assembly(true);
+//z_belt_lower_mount();
+//z_belt_upper_mount();
+
+//z_belt_upper_left_stl();
