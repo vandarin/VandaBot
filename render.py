@@ -19,12 +19,13 @@ def render(machine):
     #
     # Add the multipart files
     #
-    for i in  os.listdir(stl_dir + os.sep + "printed"):
-        if not i[:-4] in stls:
-            stls.append("printed" + os.sep + i[:-4])
+    if os.path.isdir(stl_dir + os.sep + "printed"):
+        for i in  os.listdir(stl_dir + os.sep + "printed"):
+            if not i[:-4] in stls:
+                stls.append("printed" + os.sep + i[:-4])
 
     for i in stls:
-        command = 'blender -b  utils' + os.sep + 'render.blend -P utils' + os.sep + 'viz.py -- ' + \
+        command = '/Applications/Blender/blender.app/Contents/MacOS/blender -b  utils' + os.sep + 'render.blend -P utils' + os.sep + 'viz.py -- ' + \
             stl_dir + os.sep + i + '.stl ' + render_dir + os.sep + i + '.png'
         print(command)
         subprocess.check_output(command.split())
