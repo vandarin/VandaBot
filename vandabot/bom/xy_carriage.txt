@@ -1,0 +1,17 @@
+xy_carriage:
+Vitamins:
+ 16 FlangedBall bearing F624 4mm x 13mm x 5mm
+  8 M4 cap screw x 10mm
+  2 M4 cap screw x 30mm
+  4 M4 cap screw x 35mm
+  2 Nut M4
+  4 Nyloc nut M4
+  1 AL square tube 19.2 x 19.2 x 1.5875 x 487.6mm
+ 26 Washer M4 x 9mm x 0.8mm
+
+Printed:
+  2 y_carriage_end.stl
+
+Sub-assemblies:
+  1 x_carriage
+  2 y_carriage_slide

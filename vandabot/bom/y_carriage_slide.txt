@@ -1,0 +1,10 @@
+y_carriage_slide:
+Vitamins:
+ 16 Ball bearing 623 3mm x 10mm x 4mm
+ 16 M3 cap screw x 20mm
+ 16 Nut M3
+  2 Spring 12mm OD, 0.75mm gauge x 10mm long
+
+Printed:
+  2 y_carriage_slide.stl
+

@@ -1,0 +1,17 @@
+Z Axis:
+Vitamins:
+ 16 M4 cap screw x 10mm
+ 16 Washer M4 x 9mm x 0.8mm
+
+Printed:
+  2 z_rail_bottom.stl
+  2 z_rail_top.stl
+
+Sub-assemblies:
+  1 Bed
+  1 Z Belt Lower Left
+  1 Z Belt Lower Right
+  1 Z Belt Upper Left
+  1 Z Belt Upper Right
+  1 Z Motor Mount
+  2 Z Rail

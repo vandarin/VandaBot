@@ -1,0 +1,21 @@
+Extruder:
+Vitamins:
+  1 Ball bearing 624 4mm x 13mm x 5mm
+  1 M3 cap screw x 10mm
+  1 M3 cap screw x 35mm
+  1 E3D v6 Extruder
+  1 MK8 extruder drive gear
+  1 NEMA17 x 47mm stepper motor
+  3 Nut M3
+  2 M3 pan screw x 10mm
+  3 M3 pan screw x 16mm
+  1 M3 pan screw x 25mm
+  1 Spring 7mm OD, 1mm gauge x 10mm long
+  8 Washer M3 x 7mm x 0.5mm
+  4 Star washer M3 x 0.5mm
+
+Printed:
+  1 extruder_base.stl
+  1 extruder_hotend_clamp.stl
+  1 extruder_idler.stl
+

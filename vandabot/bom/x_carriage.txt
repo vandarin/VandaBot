@@ -1,0 +1,15 @@
+x_carriage:
+Vitamins:
+  8 Ball bearing 623 3mm x 10mm x 4mm
+  8 M3 cap screw x 20mm
+  4 M4 cap screw x 35mm
+  8 Nut M3
+  8 Nut M4
+  1 Spring 12mm OD, 0.75mm gauge x 10mm long
+  4 Washer M4 x 9mm x 0.8mm
+
+Printed:
+  1 x_carriage.stl
+
+Sub-assemblies:
+  1 Extruder

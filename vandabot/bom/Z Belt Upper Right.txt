@@ -1,0 +1,11 @@
+Z Belt Upper Right:
+Vitamins:
+  1 Ball bearing 608 8mm x 22mm x 7mm
+  1 M3 cap screw x 10mm
+  2 M4 cap screw x 10mm
+  2 Washer M4 x 9mm x 0.8mm
+
+Printed:
+  1 printed_washer.stl
+  1 z_belt_upper_right.stl
+
