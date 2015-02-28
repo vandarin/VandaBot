@@ -2,7 +2,6 @@ include <conf/config.scad>
 include <_positions.scad>
 use <frame.scad>
 
-function motor_offset(type) = NEMA_width(type)/2 + motor_clearance + extrusion_diag/2;
 
 module xy_motor_assembly(type = XY_motor) {
 	assembly("xy_motor");

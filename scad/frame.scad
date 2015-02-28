@@ -241,7 +241,7 @@ module xy_pulley_assembly() {
 	assembly("xy_pulley");
 	render() xy_pulley_mount_stl();
 	frame_corner_screws(frame_corner_top_holes());
-	translate([-motor_offset(XY_motor), motor_offset(XY_motor), extrusion_diag/2 + mount_thickness/2]) {
+	translate([-motor_offset(XY_motor) - XY_pulley_bearing_offset, motor_offset(XY_motor) + XY_pulley_bearing_offset, extrusion_diag/2 + mount_thickness/2]) {
 		pulley_tower();
 	}
 
