@@ -208,7 +208,7 @@ module extruder_idler_stl() {
 
 module extruder_assembly() {
 	assembly("Extruder");
-	translate([0, -carriage_width/2 - hotend_offset/2, carriage_width + E_motor_clearance])
+	translate([0, -carriage_width/2 - hotend_offset/2, 0])
 		// press bearing
 		rotate([90,0,0]) {
 			translate([x_idler, 0, hotend_offset + ball_bearing_width(BB624)/2 + base_thickness+1]) {
@@ -228,7 +228,7 @@ module extruder_assembly() {
 			rotate([0,0,-90])
 			NEMA_screws(E_motor, n=1, screw_length = screw_longer_than(8 + mount_thickness + total_thickness), screw_type = M3_pan_screw);
 		}
-	translate([NEMA_width(E_motor)/2+ 15+5, -carriage_width/2 - hotend_offset/2 - z_filament - mount_thickness, carriage_width + E_motor_clearance+21])
+	translate([NEMA_width(E_motor)/2+ 15+5, -carriage_width/2 - hotend_offset/2 - z_filament - mount_thickness, 0+21])
 		rotate([0, 90, 0]) {
 			screw_and_washer(M3_cap_screw, screw_longer_than(28+5));
 			translate([0,0,-20])
@@ -237,7 +237,7 @@ module extruder_assembly() {
 				nut(screw_nut(M3_cap_screw));
 			}
 		}
-	translate([0, -carriage_width/2 - hotend_offset, carriage_width + E_motor_clearance])
+	translate([0, -carriage_width/2 - hotend_offset, 0])
 		rotate([90,0,0]) {
 			color("LimeGreen") {
 				render() extruder_base_stl();
@@ -257,7 +257,7 @@ module extruder_assembly() {
 	vitamin("E3D v6 Extruder");
 	color("LightBlue", 0.5)
 	render()
-	translate([4.5, -carriage_width/2 - hotend_radius - hotend_offset/2, -5]) {
+	translate([4.5, -carriage_width/2 - hotend_radius - hotend_offset/2, -62]) {
 		cylinder(h=200, d=1.8, center=true);
 		cylinder(h=62, d=29, center=true, $fn=12);
 	}

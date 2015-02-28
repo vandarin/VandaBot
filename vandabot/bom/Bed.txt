@@ -3,10 +3,10 @@ Vitamins:
   4 19mm bulldog clip
   1 PCB bed 314mm x 214mm
   1 PCB Insulator 314mm x 214mm
-  4 M3 cap screw x 10mm
   1 Glass sheet 314mm x 202mm x 2mm
   4 Hex male / female pillar M3 x 20mm
   1 Ribbon cable 26 way 347mm
+  4 M3 cap screw x 10mm
   2 Heatshrink sleeving ID 1.6mm x 15mm
   2 Heatshrink sleeving ID 2.4mm x 15mm
   2 Heatshrink sleeving ID 6.4mm x 30mm
