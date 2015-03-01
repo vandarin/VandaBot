@@ -7,7 +7,7 @@ module xy_motor_assembly(type = XY_motor) {
 	assembly("xy_motor");
 	frame_corner_screws(frame_corner_top_holes());
 	render() xy_motor_mount_stl(type);
-	translate([-motor_offset(type),motor_offset(type),extrusion_diag/2 -mount_thickness/2]) {
+	translate([-motor_offset(type),motor_offset(type), extrusion_diag/2 + frame_corner_thickness/2 - mount_thickness]) {
 		NEMA(type);
 		translate([0, 0, mount_thickness]) {
 			metal_pulley(pulley_type);
@@ -21,10 +21,10 @@ module xy_motor_assembly(type = XY_motor) {
 module xy_motor_mount_stl(type = XY_motor) {
 	stl("xy_motor_mount");
 	frame_corner();
-	translate([-motor_offset(type),motor_offset(type),extrusion_diag/2])
+	translate([-motor_offset(type),motor_offset(type),extrusion_diag/2 + frame_corner_thickness/2 - mount_thickness/2])
 	difference() {
 		union() {
-			color(plastic_part_color("Yellow")) {
+			translate([motor_clearance, - motor_clearance, 0]) {
 			cube(
 				[
 				NEMA_width(type) + motor_clearance*2,

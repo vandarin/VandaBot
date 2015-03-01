@@ -144,7 +144,7 @@ module y_carriage_end_stl() {
 	difference() {
 		union() {
 			// pulley_tower mount
-			translate([motor_offset(XY_motor)/2 - frame_corner_thickness,0, extrusion_diag/2])
+			translate([motor_offset(XY_motor)/2 - frame_corner_thickness,0, extrusion_diag/2 + frame_corner_thickness/2 - mount_thickness/2])
 				cube(size=[motor_offset(XY_motor), carriage_width + frame_corner_thickness, mount_thickness], center=true);
 			// carriage_tab
 			rotate([0,0,180])
@@ -157,7 +157,11 @@ module y_carriage_end_stl() {
 			// extra wall for pulley_tower holes
 			for (i=[-1,1]) {
 			for (j=[0,1])
-			translate([j * (pulley_od(pulley_type) + belt_thickness(XY_belt)) + XY_pulley_bearing_offset, i * (extrusion_diag/2 + thick_wall), extrusion_diag/2])
+			translate([
+				j * (pulley_od(pulley_type)) + XY_pulley_bearing_offset,
+				i * (extrusion_diag/2 + thick_wall),
+				extrusion_diag/2 + frame_corner_thickness/2 - mount_thickness/2
+				])
 				cylinder(h=mount_thickness, r=thick_wall, center=true);
 			}
 		} // end union
@@ -167,7 +171,11 @@ module y_carriage_end_stl() {
 		// pulley_tower holes
 		for (i=[-1,1]) {
 			for (j=[0,1])
-			translate([j * (pulley_od(pulley_type) + belt_thickness(XY_belt)) + XY_pulley_bearing_offset, i * (extrusion_diag/2 + thick_wall), extrusion_diag/2 + mount_thickness/2])
+			translate([
+				j * (pulley_od(pulley_type)) + XY_pulley_bearing_offset,
+				i * (extrusion_diag/2 + thick_wall),
+				extrusion_diag/2 + mount_thickness/2
+				])
 				screw_hole(frame_thick_screw, screw_longer_than(20));
 		}
 		// extrusion
@@ -191,7 +199,11 @@ module y_carriage_end_vitamins() {
 		screw_and_washer(frame_thick_screw, screw_longer_than(thick_wall+tube_dimensions.z));
 	}
 	for (i=[-1,1]) {
-		translate([(i > 0 ? pulley_od(pulley_type) + belt_thickness(XY_belt) + XY_pulley_bearing_offset : XY_pulley_bearing_offset), i * (extrusion_diag/2 + thick_wall), extrusion_diag/2 + mount_thickness/2])
+		translate([
+			(i > 0 ? pulley_od(pulley_type) + XY_pulley_bearing_offset : XY_pulley_bearing_offset),
+			i * (extrusion_diag/2 + thick_wall),
+			extrusion_diag/2 + frame_corner_thickness/2
+			])
 			pulley_tower();
 	}
 }
