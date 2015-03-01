@@ -13,9 +13,9 @@ module xy_carriage_assembly() {
 	assembly("xy_carriage");
 	translate([-frame_offset.x, 0, 0]) {
 		translate([carriage_width/2 + screw_boss_diameter(frame_thick_screw)/2,0,0]) {
-			translate([0,0,thick_wall*2])
-			screw_and_washer(frame_thick_screw, screw_longer_than(thick_wall*5));
-			translate([0,0,-thick_wall*2.5])
+			translate([0,0,thick_wall*1.5])
+			screw_and_washer(frame_thick_screw, screw_longer_than(thick_wall*4));
+			translate([0,0,-thick_wall*2])
 				nut(screw_nut(frame_thick_screw));
 		}
 		rotate([90,0,0]) {
@@ -28,9 +28,9 @@ module xy_carriage_assembly() {
 	}
 	translate([frame_offset.x, 0, 0]) {
 		translate([-carriage_width/2 - screw_boss_diameter(frame_thick_screw)/2,0,0]) {
-			translate([0,0,thick_wall*2])
-			screw_and_washer(frame_thick_screw, screw_longer_than(thick_wall*5));
-			translate([0,0,-thick_wall*2.5])
+			translate([0,0,thick_wall*1.5])
+			screw_and_washer(frame_thick_screw, screw_longer_than(thick_wall*4));
+			translate([0,0,-thick_wall*2])
 				nut(screw_nut(frame_thick_screw));
 		}
 		rotate([-90,180,0])
@@ -118,7 +118,7 @@ module x_carriage_stl() {
 					cylinder(h=belt_width(XY_belt) * 4, r=belt_thickness(XY_belt)*1.5, center=true);
 					translate([j * belt_thickness(XY_belt) * 2, 0, 0])
 					cube(size=[belt_thickness(XY_belt)*3, belt_thickness(XY_belt)*1.5, belt_width(XY_belt) * 4], center=true);
-					translate([j * -belt_thickness(XY_belt)*3.5, 0, belt_width(XY_belt)])
+					translate([j * -belt_thickness(XY_belt)*3.5, 0, belt_width(XY_belt)*1.5])
 						cube(size=[4,belt_thickness(XY_belt)*6,belt_width(XY_belt)*2], center=true);
 				}
 	}
@@ -363,12 +363,12 @@ module carriage_layout() {
 			children();
 		}
 	// 9:00
-	translate([-extrusion_size/2 - ball_bearing_diameter(carriage_bearing)/2,extrusion_size/2-ball_bearing_width(carriage_bearing)/2,-ball_bearing_diameter(carriage_bearing)/2])
+	translate([-extrusion_size/2 - ball_bearing_diameter(carriage_bearing)/2,extrusion_size/2-ball_bearing_width(carriage_bearing)/2,-ball_bearing_diameter(carriage_bearing)/3]) // pull this one in so it doesn't interfere with the belt clip
 		rotate([90,0,0]) {
 			children();
 		}
 	// 12:00
-	translate([-extrusion_size/2+ball_bearing_width(carriage_bearing)/2,extrusion_size/2 + ball_bearing_diameter(carriage_bearing)/2,ball_bearing_diameter(carriage_bearing)/2])
+	translate([-extrusion_size/2+ball_bearing_width(carriage_bearing)/2,extrusion_size/2 + ball_bearing_diameter(carriage_bearing)/2,ball_bearing_diameter(carriage_bearing)/3]) // pull this one in so it doesn't interfere with the belt clip
 		rotate([90,0,90]) {
 			children();
 		}
@@ -386,8 +386,8 @@ module carriage_tab() {
 //carriage_slide();
 //xy_carriage_assembly();
 //y_carriage_slide_assembly();
-x_carriage_assembly();
-//x_carriage_stl();
+//x_carriage_assembly();
+x_carriage_stl();
 
 //y_carriage_end_stl();
 //y_carriage_end_vitamins();
