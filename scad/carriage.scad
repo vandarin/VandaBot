@@ -55,7 +55,7 @@ module x_carriage_assembly() {
 	render() x_carriage_stl();
 	rotate([45,0,0]) rotate([0,90,0])
 	{
-		carriage_slide_vitamins();
+		carriage_slide_vitamins(false);
 	}
 	translate([0,0,carriage_width/2 + thick_wall/2 + NEMA_width(E_motor)/2 + E_motor_clearance])
 		extruder_assembly();
@@ -67,28 +67,30 @@ module x_carriage_stl() {
 	difference(){
 		union() {
 			rotate([45,0,0]) rotate([0,90,0])
-				render() carriage_slide();
+				render() carriage_slide(false);
 			translate([
 				0,
 				-carriage_width/2,
 				carriage_width/2 + thick_wall/2 + NEMA_width(E_motor)/2 + E_motor_clearance
 				]) {// vertical mount
-				translate([0, mount_thickness/2 - hotend_offset, mount_thickness])
-					cube(size=[carriage_height, mount_thickness, NEMA_width(E_motor)+mount_thickness*2], center=true);
+				translate([0, mount_thickness/2 - hotend_offset, - thick_wall/4])
+					cube(size=[carriage_height, mount_thickness, NEMA_width(E_motor) + thick_wall/2], center=true);
 				// connector
-				translate([0, -hotend_offset/2+mount_thickness/2, -carriage_width/2])
-					cube(size=[carriage_height, hotend_offset + mount_thickness, thick_wall], center=true);
-				translate([0,0,-NEMA_width(E_motor)/2 - mount_thickness+0.7])
+				translate([0, - hotend_offset + mount_thickness*1.5, -NEMA_width(E_motor)/2 - E_motor_clearance])
+					cube(size=[carriage_height, mount_thickness*3, thick_wall], center=true);
+
+				translate([0,0,-NEMA_width(E_motor)/2 - E_motor_clearance - mount_thickness/2])
 					rotate([-90,0,0]) rotate([0, 90, 0])
 					fillet(mount_thickness, carriage_height);
 			}
+			// belt clips
 			for(i=[-1,1]) for(j=[-1,1])
 				translate([
 					j * (carriage_height/2 - belt_thickness(XY_belt)*3),
 					i * (extrusion_diag/2 + thick_wall - ball_bearing_diameter(XY_bearing)/2),
-					carriage_width/2 + mount_thickness/2 + thick_wall/2
+					carriage_width/2 + thick_wall/2
 					])
-					cylinder(h=belt_width(XY_belt) * 3, r=belt_thickness(XY_belt)*3, center=true);
+					cylinder(h=belt_width(XY_belt) * 4, r=belt_thickness(XY_belt)*3, center=true);
 		} // end union
 			translate([
 				0,
@@ -98,15 +100,20 @@ module x_carriage_stl() {
 				translate([0,-hotend_offset+mount_thickness/2, 0])
 					rotate([90,0,0])
 					NEMA_all_holes(E_motor);
-				translate([0,-hotend_offset,-NEMA_width(E_motor)/2 - mount_thickness+0.5])
+				translate([0,-hotend_offset,-NEMA_width(E_motor)/2 - E_motor_clearance - mount_thickness/3*2])
 					rotate([0, -90, 0])
 					fillet(mount_thickness, carriage_height+5);
+				for(i=[-1,1])
+				translate([i * (NEMA_width(E_motor)/2 + thick_wall/2), -mount_thickness, NEMA_width(E_motor)/2])
+					rotate([0,i * 45,0])
+					cube(size=[mount_thickness*6, mount_thickness*2, mount_thickness*2], center=true);
 			}
+		// belt clips
 		for(i=[-1,1]) for(j=[-1,1])
 				translate([
 					j * (carriage_height/2 - belt_thickness(XY_belt)*3),
 					i * (extrusion_diag/2 + thick_wall - ball_bearing_diameter(XY_bearing)/2),
-					carriage_width/2 + mount_thickness/2 + thick_wall/2
+					carriage_width/2 + thick_wall/2
 					]) {
 					cylinder(h=belt_width(XY_belt) * 4, r=belt_thickness(XY_belt)*1.5, center=true);
 					translate([j * belt_thickness(XY_belt) * 2, 0, 0])
@@ -367,8 +374,8 @@ module carriage_tab() {
 //carriage_slide();
 //xy_carriage_assembly();
 //y_carriage_slide_assembly();
-//x_carriage_assembly();
-x_carriage_stl();
+x_carriage_assembly();
+//x_carriage_stl();
 
 //y_carriage_end_stl();
 //y_carriage_end_vitamins();
