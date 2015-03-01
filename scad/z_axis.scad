@@ -183,7 +183,7 @@ module z_belt_upper_mount(right=false) {
 			rotate([-45,0,0])
 		cube(size=[extrusion_size*4, extrusion_size+eta, extrusion_size+eta], center=true);
 	for(i=[-1,1])
-	translate([0,extrusion_diag/2, i * extrusion_diag*1.75])
+	translate([0,extrusion_diag/2 + 9, i * extrusion_diag*1.75])
 		rotate([0,90,0])
 			cylinder(h=extrusion_size*2, r=extrusion_diag*1.5, center=true);
 	} // end difference
