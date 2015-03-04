@@ -116,7 +116,7 @@ module z_motor_mount_stl() {
 
 module z_belt_upper_assembly(right=false) {
 	assembly(str("Z Belt Upper ", (right ? "Right" : "Left")));
-	translate([0,(right ? -8 : 0), 0])
+	translate([0,(right ? -Z_belt_right_offset : 0), 0])
 		rotate([90,0,0]) {
 			ball_bearing(Z_bearing);
 			translate([0,0,ball_bearing_width(Z_bearing)/2]) {
@@ -149,18 +149,18 @@ module z_belt_upper_assembly(right=false) {
 module z_belt_upper_mount(right=false) {
 	difference() {
 		union(){
-			translate([0,ball_bearing_width(Z_bearing)/2 + (right ? -7 : 1),0]) {
+			translate([0,ball_bearing_width(Z_bearing)/2 + (right ? -Z_belt_right_offset + 1 : 1),0]) {
 				rotate([90,0,0]) {
 					cylinder(h=2, r=Z_bearing[0]/2+1 , center=true);
 					translate([0, 0, ball_bearing_width(Z_bearing)/2])
 						cylinder(h=ball_bearing_width(Z_bearing), r=Z_bearing[0]/2 - 0.125, center=true, $fn=20);
 				}
-				translate([0,(extrusion_diag*2 + frame_corner_thickness*3)/2 + (right ? 3 : -1), 0])
-				cube(size=[ ball_bearing_diameter(Z_bearing) + 2, extrusion_diag*2 + frame_corner_thickness*2 + (right ? 10 : 2), extrusion_diag + frame_corner_thickness*2], center=true);
+				translate([0,(extrusion_diag*2 + frame_corner_thickness*3)/2 + (right ? Z_belt_right_offset/2 - 1 : -1), 0])
+				cube(size=[ ball_bearing_diameter(Z_bearing) + 2, extrusion_diag*2 + frame_corner_thickness*2 + (right ? Z_belt_right_offset : 2), extrusion_diag + frame_corner_thickness*2], center=true);
 
 			}
 		} // end union
-		translate([0, (right ? 1 : -1) * ball_bearing_width(Z_bearing)/2, 0])
+		translate([0, (right ? -Z_belt_right_offset : 0) - ball_bearing_width(Z_bearing)/2, 0])
 		rotate([90,0,0])
 			screw_hole(M3_cap_screw, screw_longer_than(ball_bearing_width(Z_bearing)*3));
 		translate([
@@ -201,7 +201,7 @@ module z_belt_upper_left_stl() {
 
 module z_belt_lower_assembly(right=false) {
 	assembly(str("Z Belt Lower ", (right ? "Right" : "Left")));
-	translate([0,(right ? -8 : 0), 0])
+	translate([0,(right ? -Z_belt_right_offset : 0), 0])
 	z_belt_lower_bearing_layout() {
 		ball_bearing(Z_bearing);
 		translate([0,0,ball_bearing_width(Z_bearing)/2]) {
@@ -246,7 +246,7 @@ module z_belt_lower_right_stl() {
 module z_belt_lower_mount(right = false) {
 	difference() {
 		union() {
-		translate([0,ball_bearing_width(Z_bearing)/2 + (right ? -7 : 1), 0]) {
+		translate([0,ball_bearing_width(Z_bearing)/2 + (right ? -Z_belt_right_offset + 1 : 1), 0]) {
 		// bearing axles
 		z_belt_lower_bearing_layout() {
 			//spacer
@@ -277,16 +277,16 @@ module z_belt_lower_mount(right = false) {
 	}
 	translate([
 		-ball_bearing_diameter(Z_bearing)/2,
-		(extrusion_diag + extrusion_size + frame_corner_thickness*4)/2 + ball_bearing_width(Z_bearing)/2 + (right ? -3 : 1),
+		(extrusion_diag + extrusion_size + frame_corner_thickness*4)/2 + ball_bearing_width(Z_bearing)/2 + (right ? -Z_belt_right_offset/2 + 1 : 1),
 		0
 		])
 		difference() {
 			cube([
 				extrusion_diag + frame_corner_thickness*2,
-				extrusion_diag + extrusion_size + frame_corner_thickness*4 + (right ? 8 : 0),
+				extrusion_diag + extrusion_size + frame_corner_thickness*4 + (right ? Z_belt_right_offset : 0),
 				extrusion_size + frame_corner_thickness*2
 				], center=true);
-			translate([0, -frame_corner_thickness + extrusion_size + (right ? 4 : 0), 0]) {
+			translate([0, -frame_corner_thickness + extrusion_size + (right ? Z_belt_right_offset/2 : 0), 0]) {
 				// tube
 				cube(size=[extrusion_size*4, extrusion_size, extrusion_size], center = true);
 				translate([0,0,extrusion_size/2 + frame_corner_thickness + eta])
@@ -300,7 +300,7 @@ module z_belt_lower_mount(right = false) {
 		}
 	} // end union
 	z_belt_lower_bearing_layout()
-	translate([0,0,ball_bearing_width(Z_bearing)/2 + (right ? 8 : 0)])
+	translate([0,0,ball_bearing_width(Z_bearing)/2 + (right ? Z_belt_right_offset : 0)])
 		screw_hole(M3_cap_screw, screw_longer_than(ball_bearing_width(Z_bearing) + frame_corner_thickness*2));
 	}
 

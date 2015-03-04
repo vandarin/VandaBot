@@ -11,7 +11,7 @@ T5x10_metal_pulley  = ["T5",                          10, 15,    12.85 / 2,     
 T2p5x16_metal_pulley= ["T2.5",                        16, 12.16, 12.16 / 2 - 0.8,         8,  16, 5.7, 5, 16.0, 1.0, 6, 3.75, [0,     0,1.3], 0, M4_grub_screw];
 T5x8_plastic_pulley = ["../imported_stls/pulley.stl",  8,  0,    pulley_inner_radius,     0,   0, 0,   5,    0,   0, 6,    4, [-10, -10,  0], 6, M3_grub_screw];
 GT2x20_metal_pulley = ["GT2",                         20, 12.2,  12.2 / 2 - 0.75,         8,  10, 8,   5, 18.0, 1.0, 6, 3.75, [0,     0, -1], 0, M3_grub_screw];
-GT2x20_twin_metal_pulley = ["GT2 TWIN",              20, 12.2,  12.2 / 2 - 0.75,         16,  10, 2,   5, 18.0, 1.0, 6, 3.75, [0,     0, -1], 0, M3_grub_screw];
+GT2x20_twin_metal_pulley = ["GT2 TWIN",              20, 12.2,  12.2 / 2 - 0.75,         26.7,  10, 2,   5, 16.0, 1.0, 6, 3.75, [0,     0, 2], 0, M3_grub_screw];
 
 function pulley_type(type)             = type[0];
 function pulley_teeth(type)            = type[1];

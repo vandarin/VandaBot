@@ -71,6 +71,7 @@ carriage_bearing = BB623;
 Z_belt = GT2;
 Z_motor = NEMA17;
 Z_bearing = BB608;
+Z_belt_right_offset = 18.5;
 
 E_motor = NEMA17;
 E_motor_clearance = 3;
