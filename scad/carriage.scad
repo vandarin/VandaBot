@@ -183,8 +183,8 @@ module y_carriage_end_stl() {
 			rotate([45,0,0])
 			cube(size=[motor_offset(XY_motor), extrusion_size, extrusion_size], center=true);
 		// keep the top flat
-		translate([motor_offset(XY_motor)/2 - frame_corner_thickness, 0, extrusion_diag/2 + mount_thickness*2])
-			cube(size=[motor_offset(XY_motor) + frame_corner_thickness, extrusion_diag, mount_thickness*3], center=true);
+		translate([motor_offset(XY_motor)/2 - frame_corner_thickness, 0, extrusion_diag/2 + frame_corner_thickness/2 + mount_thickness/2])
+			cube(size=[motor_offset(XY_motor) + frame_corner_thickness, extrusion_diag, mount_thickness], center=true);
 		// extrusion screws
 		y_carriage_end_ext_layout() {
 			screw_hole(frame_thick_screw, screw_longer_than(thick_wall+tube_dimensions.z));

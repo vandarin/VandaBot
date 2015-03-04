@@ -73,7 +73,7 @@ Z_motor = NEMA17;
 Z_bearing = BB608;
 
 E_motor = NEMA17;
-E_motor_clearance = 4;
+E_motor_clearance = 3;
 
 
 printed_washer_type = [Z_bearing, M3_cap_screw];
