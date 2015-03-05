@@ -100,18 +100,22 @@ module z_long_belt_clip_stl() {
 			translate([ (carriage_width/2 - thick_wall*1.25), 0, 0])
 				cylinder(h=thick_wall, d = belt_width(Z_belt) + default_wall, center=true);
 
-			translate([ -1 * (carriage_width/2 - thick_wall*1.25 + belt_width(Z_belt)*4), 0, 0])
+			translate([ -1 * (carriage_width/2 - thick_wall*1.25 + belt_width(Z_belt)*6), 0, 0])
 				cylinder(h=thick_wall, d = belt_width(Z_belt) + default_wall, center=true);
 		}
 		for(i=[-1,1]) {
 			translate([i * (carriage_width/2 - thick_wall*1.25), 0, thick_wall])
 			screw_hole(frame_thick_screw, thick_wall*2);
 		}
-		translate([-1 * (carriage_width/2 - thick_wall*1.25 + belt_width(Z_belt)*2.5), 0, 0]) {
-
-			translate([0,0,belt_thickness(Z_belt)/2])
-			cube(size=[belt_width(Z_belt)*3.5, 50, belt_thickness(Z_belt)+1], center=true);
-			cube(size=[belt_width(Z_belt)*3.5, belt_thickness(Z_belt)*2 + 1, thick_wall*2], center=true);
+		translate([-1 * (carriage_width/2 + thick_wall*1.2 + belt_width(Z_belt)*2), 0, 0]) {
+			translate([0,0,thick_wall/2 - belt_thickness(Z_belt)/2])
+				cube(size=[belt_width(Z_belt)+2, 50, belt_thickness(Z_belt)+1], center=true);
+			cube(size=[belt_width(Z_belt)+2, belt_thickness(Z_belt)*2 + 1, thick_wall*2], center=true);
+		}
+		translate([-1 * (carriage_width/2 + thick_wall*1.2 + belt_width(Z_belt)*2 - Z_belt_right_offset), 0, 0]) {
+			translate([0,0,thick_wall/2 - belt_thickness(Z_belt)/2])
+				cube(size=[belt_width(Z_belt)+2, 50, belt_thickness(Z_belt)+1], center=true);
+			cube(size=[belt_width(Z_belt)+2, belt_thickness(Z_belt)*2 + 1, thick_wall*2], center=true);
 		}
 	}
 }
