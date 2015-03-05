@@ -53,10 +53,11 @@ difference() {
 		translate([-15.5,15.5,-1]) cylinder(r=1.5, h=16, $fn=64);
 
 		// motor hole
-		translate([0,0,-1]) cylinder(r=11.1, h=3, $fn=64);
+		// not needed for vandabot
+		*translate([0,0,-1]) cylinder(r=11.1, h=3, $fn=64);
 
 		// Hole for the filament
-		translate([x_filament,35,z_filament]) rotate([90,0,0]) cylinder(r=1.2, h=70, $fn=64);
+		translate([x_filament,35,z_filament]) rotate([90,0,0]) cylinder(r=1.4, h=70, $fn=64);
 
 		// Hole for the spring nut
 		translate([6,21,9.5]) rotate([0,90,0]) cylinder(r=2, h=12, $fn=64);
@@ -91,7 +92,8 @@ difference() {
 
 }
 	// Import the 2D design, Add some support
-		translate([0,0,0]) linear_extrude(height = base_thickness, center = false, convexity = 10)
+		// not needed for vandabot
+		*translate([0,0,0]) linear_extrude(height = base_thickness, center = false, convexity = 10)
   			import (file = "extruder/MyExtruder_v1.2.dxf", layer = "support", $fn=64);
 
 }
