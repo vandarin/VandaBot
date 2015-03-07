@@ -113,31 +113,23 @@ module frame_corners() {
 
 			// FRONT BOTTOM RIGHT
 			translate([frame_offset.x,-frame_offset.y, -frame_offset.z]) {
-				rotate([0,90,0]) {
-					render() frame_corner_bottom_stl();
-					frame_corner_screws(frame_corner_bottom_holes());
-				}
+				rotate([0,0,0]) render() frame_corner_bottom_stl();
+				rotate([0,90,0]) frame_corner_screws(frame_corner_bottom_holes());
 			}
 			// FRONT BOTTOM LEFT
 			translate([-frame_offset.x,-frame_offset.y, -frame_offset.z]) {
-				rotate([0,90,-90]) {
-					render() frame_corner_bottom_stl();
-					frame_corner_screws(frame_corner_bottom_holes());
-				}
+				rotate([0,0,-90]) render() frame_corner_bottom_stl();
+				rotate([0,90,-90]) frame_corner_screws(frame_corner_bottom_holes());
 			}
 			// BACK BOTTOM RIGHT
 			translate([frame_offset.x,frame_offset.y, -frame_offset.z]) {
-				rotate([90,0,90]) {
-					render() frame_corner_bottom_stl();
-					frame_corner_screws(frame_corner_bottom_holes());
-				}
+				rotate([0,0,90]) render() frame_corner_bottom_stl();
+				rotate([90,0,90]) frame_corner_screws(frame_corner_bottom_holes());
 			}
 			// BACK BOTTOM LEFT
 			translate([-frame_offset.x,frame_offset.y, -frame_offset.z]) {
-				rotate([90,0,180]) {
-					render() frame_corner_bottom_stl();
-					frame_corner_screws(frame_corner_bottom_holes());
-				}
+				rotate([0,0,180]) render() frame_corner_bottom_stl();
+				rotate([90,0,180]) frame_corner_screws(frame_corner_bottom_holes());
 			}
 
 		}
@@ -149,6 +141,7 @@ module frame_corner(angled = true) {
 	//main block
 	base_size = angled ? extrusion_diag + frame_corner_thickness : extrusion_size + frame_corner_thickness * 2;
 	position = angled ? extrusion_diag : extrusion_size;
+rotate([0,(angled ? 0 : 90), 0])
 	difference() {
 	color(plastic_part_color("Yellow"))
 		union() {
@@ -171,7 +164,7 @@ module frame_corner(angled = true) {
 					center=true
 				);
 			// cover the tiny hole between previous cubes
-			cube(size=[extrusion_size,extrusion_size,extrusion_size+frame_corner_thickness*2], center=true);
+			cube(size=[extrusion_size+frame_corner_thickness*2,extrusion_size+frame_corner_thickness*2,extrusion_size+frame_corner_thickness*2], center=true);
 			translate([0,0,-position])
 			cube([base_size,base_size,position*(angled ? 2 : 3)], center=true);
 				} // end inner union
@@ -207,7 +200,7 @@ module frame_corner(angled = true) {
 				position + frame_corner_thickness
 				])
 					rotate([45,45,0])
-						cube(base_size*2, center=true);
+						*cube(base_size*2, center=true);
 				translate([-frame_offset.x,frame_offset.y,frame_offset.z])
 					frame_extrusions_bottom(false);
 				translate([-frame_offset.x,frame_offset.y,-frame_offset.z])
@@ -286,7 +279,8 @@ function frame_corner_bottom_holes() = [
 
 
 if (true) {
-	frame_corner_bottom_stl();
+	frame_assembly();
+	//frame_corner_bottom_stl();
 	//frame_corner_screws(frame_corner_bottom_holes());
 } else {
 	xy_pulley_assembly();
