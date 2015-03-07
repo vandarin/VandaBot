@@ -1,6 +1,7 @@
 // bom = 2;
 
-extrusion_size =  19.2; //0.75 * 25.4; // 3/4 inch tube
+shrink_factor = 1.01;
+extrusion_size =  19.2 * shrink_factor; //0.75 * 25.4 = 19.05 ; // 3/4 inch tube
 frame_corner_thickness = 3;
 mount_thickness = 5;
 carriage_clearance = 6;

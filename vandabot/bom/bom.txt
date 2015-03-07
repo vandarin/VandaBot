@@ -23,7 +23,7 @@ Vitamins:
   |  |  |  |  |  |  |  |  |  |  |  |16|  | 8|  | 24 FlangedBall bearing F624 4mm x 13mm x 5mm
  4|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  4 19mm bulldog clip
  1|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  1 PCB bed 314mm x 214mm
-  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 Belt T2 x 6mm x 2142mm
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 Belt T2 x 6mm x 2148mm
   | 4|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  4 Corner Brace
  1|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  1 PCB Insulator 314mm x 214mm
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 E3D v6 Extruder
@@ -50,13 +50,13 @@ Vitamins:
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 M3 pan screw x 25mm
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 2|  2 Spring 12mm OD, 0.75mm gauge x 10mm long
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 Spring 7mm OD, 1mm gauge x 10mm long
-  | 2|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 AL square tube 19.2 x 19.2 x 1.5875 x 333.2mm
-  | 2|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 AL square tube 19.2 x 19.2 x 1.5875 x 369.1mm
-  |  |  |  |  |  |  |  |  |  | 4|  |  |  |  |  |  4 AL square tube 19.2 x 19.2 x 1.5875 x 465.847mm
-  |  |  |  |  |  |  |  |  |  | 4|  |  |  |  |  |  4 AL square tube 19.2 x 19.2 x 1.5875 x 476mm
-  |  |  |  |  |  |  |  |  |  |  |  | 1|  |  |  |  1 AL square tube 19.2 x 19.2 x 1.5875 x 498.547mm
-  |  |  |  |  |  |  |  |  | 2|  |  |  |  |  |  |  2 AL square tube 19.2 x 19.2 x 1.5875 x 499.176mm
-  |  |  |  |  |  |  |  |  |  | 4|  |  |  |  |  |  4 AL square tube 19.2 x 19.2 x 1.5875 x 547.847mm
+  | 2|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 AL square tube 19.392 x 19.392 x 1.5875 x 333.392mm
+  | 2|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 AL square tube 19.392 x 19.392 x 1.5875 x 370.196mm
+  |  |  |  |  |  |  |  |  |  | 4|  |  |  |  |  |  4 AL square tube 19.392 x 19.392 x 1.5875 x 467.576mm
+  |  |  |  |  |  |  |  |  |  | 4|  |  |  |  |  |  4 AL square tube 19.392 x 19.392 x 1.5875 x 477mm
+  |  |  |  |  |  |  |  |  |  |  |  | 1|  |  |  |  1 AL square tube 19.392 x 19.392 x 1.5875 x 499.276mm
+  |  |  |  |  |  |  |  |  | 2|  |  |  |  |  |  |  2 AL square tube 19.392 x 19.392 x 1.5875 x 500.408mm
+  |  |  |  |  |  |  |  |  |  | 4|  |  |  |  |  |  4 AL square tube 19.392 x 19.392 x 1.5875 x 548.576mm
  2|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 Heatshrink sleeving ID 1.6mm x 15mm
  2|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 Heatshrink sleeving ID 2.4mm x 15mm
  2|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 Heatshrink sleeving ID 6.4mm x 30mm
