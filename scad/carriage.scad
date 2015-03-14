@@ -245,7 +245,7 @@ module y_pulley_placement() {
 module y_carriage_slide_stl() {
 	stl("y_carriage_slide");
 	rotate([0,0,-45])
-	render() carriage_slide();
+	render() carriage_slide(false);
 	difference() {
 		union() {
 		translate([carriage_width/2-thick_wall/2,-thick_wall,0])
