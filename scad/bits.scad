@@ -97,16 +97,18 @@ module z_long_belt_clip_stl() {
 	stl("z_long_belt_clip");
 	difference() {
 		hull() {
-			translate([ (carriage_width/2 - thick_wall*1.25), 0, 0])
+
+			translate([ (carriage_width/2 - thick_wall), 0, 0])
 				cylinder(h=thick_wall, d = belt_width(Z_belt) + default_wall, center=true);
 
 			translate([ -1 * (carriage_width/2 - thick_wall*1.25 + belt_width(Z_belt)*6), 0, 0])
 				cylinder(h=thick_wall, d = belt_width(Z_belt) + default_wall, center=true);
 		}
-		for(i=[-1,1]) {
-			translate([i * (carriage_width/2 - thick_wall*1.25), 0, thick_wall])
-			screw_hole(frame_thick_screw, thick_wall*2);
-		}
+		for(j=[1,-1]) {
+					translate([j * (carriage_width/2 - thick_wall), 0, 10])
+					//rotate([90,0,90])
+					#nut_trap(screw_radius(frame_thick_screw), nut_radius(screw_nut(frame_thick_screw)), nut_thickness(screw_nut(frame_thick_screw)));
+					}
 		translate([-1 * (carriage_width/2 + thick_wall*1.2 + belt_width(Z_belt)*2), 0, 0]) {
 			translate([0,0,thick_wall/2 - belt_thickness(Z_belt)/2])
 				cube(size=[belt_width(Z_belt)+2, 50, belt_thickness(Z_belt)+1], center=true);
