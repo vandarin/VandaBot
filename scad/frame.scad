@@ -174,7 +174,7 @@ rotate([0,(angled ? 0 : 90), 0])
 					-position + frame_corner_thickness,
 					position
 					])
-					rotate([45,45,0])
+					*rotate([45,45,0])
 						cube(base_size*2, center=true);
 				translate([-base_size - extrusion_size/2 - frame_corner_thickness,0,-base_size-base_size/2])
 					cube(size=base_size*2, center=true);
