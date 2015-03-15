@@ -6,8 +6,8 @@ z_filament = 9.5;
 base_thickness = 2;
 total_thickness = 9;
 
-x_idler = 10;
-
+x_idler = 22/2+x_filament;
+y_idler = 0;
 module mk8() {
 	vitamin("MK8 extruder drive gear");
 	translate([0,0,z_filament])
@@ -39,7 +39,7 @@ difference() {
 		translate([0,0,-1]) linear_extrude(height = 16, center = false, convexity = 10)
   			import (file = "extruder/MyExtruder_v1.2.dxf", layer = "base_hole", $fn=64);
   		// bigger bearing cutout
-		translate([x_idler,0,3]) cylinder(d=13+1, h=12, $fn=64);
+		translate([x_idler,y_idler,3]) cylinder(d=22+2, h=12, $fn=64);
 
 		translate([0,0,z_filament])
 		rotate_extrude(convexity = 10, $fn = 100)
@@ -57,7 +57,7 @@ difference() {
 		*translate([0,0,-1]) cylinder(r=11.1, h=3, $fn=64);
 
 		// Hole for the filament
-		translate([x_filament,35,z_filament]) rotate([90,0,0]) cylinder(r=1.4, h=70, $fn=64);
+		translate([x_filament,35,z_filament]) rotate([90,0,0]) cylinder(d=4.02, h=70, $fn=64);
 
 		// Hole for the spring nut
 		translate([6,21,9.5]) rotate([0,90,0]) cylinder(r=2, h=12, $fn=64);
@@ -154,12 +154,12 @@ difference() {
 
 		// Support for the bearing
 		translate([x_idler,0,0]) {
-			cylinder(r=2.32, h=total_thickness, $fn=64);
-			cylinder(r=3.5, h=2.4, $fn=64);
+			cylinder(d=8, h=total_thickness, $fn=64);
+			cylinder(d=10, h=2.4, $fn=64);
 		}
 
 		// extend the filament guide
-		translate([0,8.5,0])
+		*translate([0,8.5,0])
 		hull() {
 			translate([-3, 0, 0])
 				cylinder(h=total_thickness, r=1, center=false, $fn=20);
@@ -171,16 +171,16 @@ difference() {
 	union() {
 
 		// Hole for the bearing screw (to be taped M3)
-		translate([x_idler,0,total_thickness]) screw_hole(M3_cap_screw, 10);
+		translate([x_idler,y_idler,total_thickness]) screw_hole(M3_cap_screw, 10);
 
 		// bearing cutout
 		difference() {
 			//bearing
-			translate([x_idler,0,2]) cylinder(d=13+2, h=12, $fn=64);
+			translate([x_idler,y_idler,2]) cylinder(d=22+2, h=12, $fn=64);
 			//axle
-			translate([x_idler,0,2]) cylinder(d=4, h=5, $fn=64);
+			translate([x_idler,y_idler,2]) cylinder(d=8, h=5, $fn=64);
 			//spacer
-			translate([x_idler,0,0]) cylinder(d=6, h=2.4, $fn=64);
+			translate([x_idler,y_idler,0]) cylinder(d=10, h=2.4, $fn=64);
 		}
 
 		// Hole for the hinge screw
@@ -194,10 +194,11 @@ difference() {
 
 
 		// Hole for the filament
-		hull() {
+		*hull() {
 			translate([5,12,4.5]) rotate([90,0,0]) cylinder(r=1.2, h=12, $fn=64);
 			translate([0,12,4.5]) rotate([90,0,0]) cylinder(r=1.2, h=12, $fn=64);
 		}
+		translate([x_filament/2, 6, 6.5]) cube(size=[12,10,9], center=true);
 	}
 
 }
@@ -214,7 +215,7 @@ module extruder_assembly() {
 		// press bearing
 		rotate([90,0,0]) {
 			translate([x_idler, 0, hotend_offset + ball_bearing_width(BB624)/2 + base_thickness+1]) {
-				ball_bearing(BB624);
+				ball_bearing(BB608);
 				translate([0,0,3])
 				screw_and_washer(M3_cap_screw, screw_longer_than(ball_bearing_width(BB624)));
 			}
@@ -268,7 +269,7 @@ module extruder_assembly() {
 
 
 //mk8();
-//base();
+//render() base();
 //extruder_base_stl();
 //translate([0,0,1])
 //rotate([0, 180, 0]) hot_end_mount();
