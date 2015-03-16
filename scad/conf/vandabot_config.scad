@@ -95,3 +95,10 @@ frame_thick_screw = M4_cap_screw;
 //
 default_wall = 3;
 thick_wall = 6;
+
+
+/// POWER SUPPLY
+ps_dim = [116, 210, 52];
+ps_switch_dim = [48, 27, 30];
+ps_switch_holes = 20.25;
+ps_extra_space = 25;

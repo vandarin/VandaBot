@@ -29,6 +29,7 @@ frame_offset = [
 	];
 
 XY_pulley_bearing_offset = abs(pulley_od(pulley_type) - ball_bearing_diameter(XY_bearing))/2;
-echo(XY_pulley_bearing_offset);
+
+ps_cover_dim = [ps_dim.x, ps_switch_dim.y + ps_extra_space, ps_dim.z];
 
 function motor_offset(type) = NEMA_width(type)/2 + motor_clearance + extrusion_diag/2;

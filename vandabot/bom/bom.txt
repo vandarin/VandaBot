@@ -33,6 +33,7 @@ Vitamins:
   |  | 3|  |  |  |  |  |  |16|  | 8|  |  |  |16| 43 Nut M3
   |  |  |  |  |  |  |  |  | 6|  |  | 2|  |  |  |  8 Nut M4
   |  |  |  |  |  |  |  |  |  |  |  | 4|  | 2|  |  6 Nyloc nut M4
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  1 Power Supply 12V 30A
   |  |  |  |  |  |  |  | 1|  |  |  |  |  |  |  |  1 GT2 TWIN pulley 20 teeth
   |  |  |  |  |  |  |  |  |  |  |  |  | 2|  |  |  2 GT2 pulley 20 teeth
  1|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  1 Ribbon cable 26 way 347mm
@@ -72,6 +73,7 @@ Printed:
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 extruder_idler.stl
   |  |  |  |  |  |  |  |  |  | 4|  |  |  |  |  |  4 frame_corner_bottom.stl
   |  |  |  | 2| 2| 1| 1|  |  |  |  |  |  |  |  |  6 printed_washer.stl
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  1 ps_cover.stl
   |  |  |  |  |  |  |  |  |  |  | 1|  |  |  |  |  1 x_carriage.stl
   |  |  |  |  |  |  |  |  |  |  |  |  | 2|  |  |  2 xy_motor_mount.stl
   |  |  |  |  |  |  |  |  |  |  |  |  |  | 2|  |  2 xy_pulley_mount.stl

@@ -6,6 +6,7 @@ use <xy_motor_mount.scad>
 use <bits.scad>
 use <carriage.scad>
 use <z_axis.scad>
+use <ps_cover.scad>
 
 module machine_assembly() {
 	frame_assembly();
@@ -17,6 +18,11 @@ module machine_assembly() {
 		color("DarkGreen", 0.2) %cube(size=envelope_dimensions, center=true);
 
 	z_assembly();
+
+	vitamin(str("PSU12: Power Supply 12V 30A"));
+	translate([dimensions.x/2 - ps_cover_dim.y,dimensions.y/2 - ps_cover_dim.z,-dimensions.z/2 + ps_cover_dim.x/2])
+		rotate([0,90,180])
+		ps_cover_stl();
 }
 
 machine_assembly();
