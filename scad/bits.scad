@@ -107,7 +107,7 @@ module z_long_belt_clip_stl() {
 		for(j=[1,-1]) {
 					translate([j * (carriage_width/2 - thick_wall), 0, 10])
 					//rotate([90,0,90])
-					#nut_trap(screw_radius(frame_thick_screw), nut_radius(screw_nut(frame_thick_screw)), nut_thickness(screw_nut(frame_thick_screw)));
+					nut_trap(screw_radius(frame_thick_screw), nut_radius(screw_nut(frame_thick_screw)), nut_thickness(screw_nut(frame_thick_screw)));
 					}
 		translate([-1 * (carriage_width/2 + thick_wall*1.2 + belt_width(Z_belt)*2), 0, 0]) {
 			translate([0,0,thick_wall/2 - belt_thickness(Z_belt)/2])
@@ -131,7 +131,7 @@ module endstop_flag_screw(length, screw_type = frame_thick_screw) {
 		}
 		translate([0,0, 50])
 		nut_trap(screw_radius(screw_type));
-		#translate([screw_radius(screw_type)*1.5,0,6])
+		translate([screw_radius(screw_type)*1.5,0,6])
 			cube(size=[screw_radius(screw_type)*2,default_wall*2,6], center=true);
 	}
 }

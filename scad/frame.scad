@@ -261,7 +261,7 @@ module xy_motor_endstop_stl() {
 			translate([j * (19/2), -9, -18])
 				rotate([-90, 0, 0])
 					translate([0,0,2])
-				#screw_hole(M3_cap_screw, screw_longer_than(10));
+				screw_hole(M3_cap_screw, screw_longer_than(10));
 	}
 }
 
