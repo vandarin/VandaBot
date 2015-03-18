@@ -8,6 +8,8 @@ Vitamins:
 
 Printed:
   4 frame_corner_bottom.stl
+  1 xy_motor_endstop.stl
+  1 xy_pulley_endstop.stl
 
 Sub-assemblies:
   2 xy_motor

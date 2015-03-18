@@ -71,14 +71,21 @@ Printed:
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 extruder_base.stl
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 extruder_hotend_clamp.stl
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 extruder_idler.stl
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 frame_clip.stl
   |  |  |  |  |  |  |  |  |  | 4|  |  |  |  |  |  4 frame_corner_bottom.stl
   |  |  |  | 2| 2| 1| 1|  |  |  |  |  |  |  |  |  6 printed_washer.stl
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  1 ps_cover.stl
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  1 smoothie_box.stl
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  1 smoothie_box_lid.stl
   |  |  |  |  |  |  |  |  |  |  | 1|  |  |  |  |  1 x_carriage.stl
+  |  |  |  |  |  |  |  |  |  |  | 1|  |  |  |  |  1 x_endstops_mount.stl
+  |  |  |  |  |  |  |  |  |  | 1|  |  |  |  |  |  1 xy_motor_endstop.stl
   |  |  |  |  |  |  |  |  |  |  |  |  | 2|  |  |  2 xy_motor_mount.stl
+  |  |  |  |  |  |  |  |  |  | 1|  |  |  |  |  |  1 xy_pulley_endstop.stl
   |  |  |  |  |  |  |  |  |  |  |  |  |  | 2|  |  2 xy_pulley_mount.stl
   |  |  |  |  |  |  |  |  |  |  |  | 2|  |  |  |  2 y_carriage_end.stl
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 2|  2 y_carriage_slide.stl
+  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 y_endstop_flag.stl
   |  |  |  | 1|  |  |  |  |  |  |  |  |  |  |  |  1 z_belt_lower_left.stl
   |  |  |  |  | 1|  |  |  |  |  |  |  |  |  |  |  1 z_belt_lower_right.stl
   |  |  |  |  |  | 1|  |  |  |  |  |  |  |  |  |  1 z_belt_upper_left.stl

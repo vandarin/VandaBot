@@ -27,7 +27,52 @@ module machine_assembly() {
 		y_endstop_flag_stl();
 	translate([-dimensions.x/2 + extrusion_diag, dimensions.y/2 - extrusion_diag, 0])
 		y_endstop_flag_stl();
+
+
+	translate([dimensions.x/2,dimensions.y/2,envelope_dimensions.z/2])
+		rotate([0,0,180])
+		frame_clip_stl();
+	translate([dimensions.x/2,dimensions.y/2,envelope_dimensions.z/2 - 99])
+		rotate([0,0,180])
+		frame_clip_stl();
+	color("purple")
+		translate([dimensions.x/2 - extrusion_diag/2, dimensions.y/2 - 150, 30])
+		rotate([90,-90,-90]) {
+			smoothie_box_stl();
+			translate([170,0,50])
+				rotate([0,180,0])
+				smoothie_box_lid_stl();
+	}
 }
 
+module smoothie_box_stl() {
+	stl("smoothie_box");
+	import("../imported_stls/Smoothie_Box_-_bottom_-_rev2_-_with_brim.stl");
+}
+module smoothie_box_lid_stl() {
+	stl("smoothie_box_lid");
+	import("../imported_stls/Lid_-_rev1_-_with_brim.stl");
+}
+
+module frame_clip_stl() {
+	stl("frame_clip");
+	difference() {
+		union() {
+			cube(size=[extrusion_size + default_wall*2, extrusion_size+default_wall, extrusion_size], center=true);
+			translate([-extrusion_size/2 - default_wall/2, extrusion_size*3/2, 0])
+			cube(size=[default_wall, extrusion_size*3, extrusion_size], center=true);
+		}
+		translate([0, -default_wall/2, 0])
+		cube(size=[extrusion_size, extrusion_size, extrusion_size*2], center=true);
+		for(i=[extrusion_size/3*2, extrusion_size/3*4, extrusion_size/3*6, extrusion_size/3*8])
+			translate([-extrusion_size/2 - default_wall/2, i, 0])
+			rotate([90,0,90])
+			slot(screw_radius(frame_thick_screw)*2, 2, extrusion_size/3, center = true);
+		rotate([0,90,0])
+			nut_trap(screw_radius(frame_thick_screw));
+	}
+}
+
+//frame_clip_stl();
 machine_assembly();
 

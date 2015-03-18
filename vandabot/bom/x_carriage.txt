@@ -6,6 +6,7 @@ Vitamins:
 
 Printed:
   1 x_carriage.stl
+  1 x_endstops_mount.stl
 
 Sub-assemblies:
   1 Extruder
