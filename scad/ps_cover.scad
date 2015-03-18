@@ -5,7 +5,7 @@ include <_positions.scad>
 module ps_cover_stl() {
 	stl("ps_cover");
 	translate([0, ps_dim.y/2, 0]) %cube(size=ps_dim, center=true);
-
+	color("purple")
 	difference() {
 		union () {
 			shelled_box(ps_cover_dim , default_wall, true);
