@@ -23,6 +23,10 @@ module machine_assembly() {
 	translate([dimensions.x/2 - ps_cover_dim.y,dimensions.y/2 - ps_cover_dim.z,-dimensions.z/2 + ps_cover_dim.x/2])
 		rotate([0,90,180])
 		ps_cover_stl();
+	translate([dimensions.x/2 - extrusion_diag, 0, 0])
+		y_endstop_flag_stl();
+	translate([-dimensions.x/2 + extrusion_diag, dimensions.y/2 - extrusion_diag, 0])
+		y_endstop_flag_stl();
 }
 
 machine_assembly();

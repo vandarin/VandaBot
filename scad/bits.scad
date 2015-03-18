@@ -121,7 +121,27 @@ module z_long_belt_clip_stl() {
 		}
 	}
 }
+
+module endstop_flag_screw(length, screw_type = frame_thick_screw) {
+	difference() {
+		union() {
+			cylinder(h=6, r = screw_radius(screw_type) + default_wall/2, center=true);
+			translate([length/2 + (screw_radius(screw_type)+default_wall)/2, 0,3])
+			cube(size=[length+0.5, default_wall/2, 12], center=true);
+		}
+		translate([0,0, 50])
+		nut_trap(screw_radius(screw_type));
+		#translate([screw_radius(screw_type)*1.5,0,6])
+			cube(size=[screw_radius(screw_type)*2,default_wall*2,6], center=true);
+	}
+}
+
+module y_endstop_flag_stl() {
+	stl("y_endstop_flag");
+	endstop_flag_screw(10, frame_thick_screw);
+}
 //belt_mount(GT2);
 //printed_washer_stl(BB608,M3_cap_screw);
 
-z_long_belt_clip_stl();
+//z_long_belt_clip_stl();
+endstop_flag_screw(20, frame_thick_screw);

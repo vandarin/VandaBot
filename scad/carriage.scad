@@ -4,7 +4,6 @@ use <MCAD/shapes.scad>
 use <bits.scad>
 use <extruder.scad>
 use <frame.scad>
-
 //carriage_bearing = BB624;
 
 
@@ -59,7 +58,36 @@ module x_carriage_assembly() {
 	}
 	translate([0,0,carriage_width/2 + thick_wall/2 + NEMA_width(E_motor)/2 + E_motor_clearance])
 		extruder_assembly();
+	translate([0, carriage_width/2 + default_wall/2, carriage_width/2 - thick_wall])
+		x_endstops_mount_stl();
 	end("x_carriage");
+}
+
+module x_endstops_mount_stl() {
+	stl("x_endstops_mount");
+	// 19mm hole spacing
+
+difference() {
+		union() {
+			hull() {
+				for(i=[1,-1])
+				translate([i * (carriage_height/2 - 4), 0, 0])
+				rotate([90,0,0])
+				cylinder(r=4, h=default_wall, center=true);
+			}
+			for(i=[1,-1])
+			translate([i*(carriage_height/2 - default_wall/2),(11)/2,0])
+			cube(size=[default_wall, default_wall + 11, 19 + default_wall*2], center=true);
+		}
+		rotate([-90,0,0]) translate([0,0,2])
+		screw_hole(frame_thick_screw, screw_longer_than(10));
+		for(i=[1,-1])
+			for(j=[1,-1])
+			translate([i*(carriage_height/2 - default_wall/2),(11)/2, j * (19/2)])
+				rotate([0, i * 90, 0])
+					translate([0,0,2])
+				screw_hole(M3_cap_screw, screw_longer_than(10));
+	}
 }
 
 module x_carriage_stl() {

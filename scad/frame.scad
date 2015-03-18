@@ -91,6 +91,9 @@ module frame_corners() {
 			// FRONT TOP RIGHT
 			translate([frame_offset.x,-frame_offset.y, frame_offset.z]) {
 				xy_pulley_assembly();
+				translate([-extrusion_diag,extrusion_diag,-mount_thickness*1.5])
+					rotate([0,0,-90])
+					xy_pulley_endstop_stl();
 			}
 			// FRONT TOP LEFT
 			translate([-frame_offset.x,-frame_offset.y, frame_offset.z]) {
@@ -109,6 +112,8 @@ module frame_corners() {
 				rotate([0,0,180]) {
 					xy_motor_assembly();
 				}
+				translate([extrusion_diag/2 + NEMA_width(XY_motor)/2, -extrusion_diag - NEMA_width(XY_motor), extrusion_diag/2 + mount_thickness])
+				xy_motor_endstop_stl();
 			}
 
 			// FRONT BOTTOM RIGHT
@@ -240,6 +245,46 @@ module xy_pulley_assembly() {
 
 	end("xy_pulley");
 }
+
+module xy_motor_endstop_stl() {
+	stl("xy_motor_endstop");
+	difference() {
+		union(){
+			cube(size=[NEMA_width(XY_motor) + default_wall*2,20,default_wall], center=true);
+			translate([0,-10,-(18 + default_wall*2)/2 + default_wall/2]) {
+				cube(size=[NEMA_width(XY_motor) + default_wall*2, default_wall, 18 + default_wall*2], center=true);
+			}
+		}
+		translate([0,22,0])
+		NEMA_all_holes(XY_motor);
+		for(j=[1,-1])
+			translate([j * (19/2), -9, -18])
+				rotate([-90, 0, 0])
+					translate([0,0,2])
+				#screw_hole(M3_cap_screw, screw_longer_than(10));
+	}
+}
+
+module xy_pulley_endstop_stl() {
+	stl("xy_pulley_endstop");
+	difference() {
+		union() {
+		translate([-5,0,0])
+		cube(size=[30, 19 + default_wall*2, default_wall], center=true);
+		translate([-18,0,-(11 + default_wall*1.5)/2])
+			cube(size=[default_wall, 19 + default_wall*2, 11 + default_wall*2], center=true);
+		}
+		translate([0,0,2])
+		screw_hole(frame_thick_screw, screw_longer_than(10));
+			for(j=[1,-1])
+			translate([-18, j * (19/2), -7])
+				rotate([0,  90, 0])
+					translate([0,0,2])
+				screw_hole(M3_cap_screw, screw_longer_than(10));
+
+	}
+}
+
 module xy_pulley_mount_stl() {
 	stl("xy_pulley_mount");
 	difference(){
