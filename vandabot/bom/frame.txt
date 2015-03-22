@@ -1,6 +1,7 @@
 frame:
 Vitamins:
  24 M4 cap screw x 10mm
+  1 Spool Holder, credit http://www.thingiverse.com/thing:172484
   4 AL square tube 19.392 x 19.392 x 1.5875 x 467.576mm
   4 AL square tube 19.392 x 19.392 x 1.5875 x 477mm
   4 AL square tube 19.392 x 19.392 x 1.5875 x 548.576mm

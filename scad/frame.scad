@@ -2,6 +2,7 @@ include <conf/config.scad>
 include <_positions.scad>
 use <xy_motor_mount.scad>
 use <bits.scad>
+use <filament_holder.scad>
 
 module frame_assembly() {
 	assembly("frame");
@@ -9,6 +10,8 @@ module frame_assembly() {
 	frame_extrusions_sides();
 	frame_extrusions_bottom();
 	frame_corners();
+	translate([dimensions.x/2, dimensions.y/2, dimensions.x/2 + 80])
+		spool_holder_assembly();
 	end("frame");
 
 }

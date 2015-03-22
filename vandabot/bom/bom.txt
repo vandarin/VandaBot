@@ -48,6 +48,7 @@ Vitamins:
   |  | 3|  |  |  |  |  |  |  |  |  |  |  |  |  |  3 M3 pan screw x 16mm
   |  | 2|  |  |  |  |  |  |  |  |  |  |  |  |  |  2 M3 pan screw x 20mm
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 M3 pan screw x 25mm
+  |  |  |  |  |  |  |  |  |  | 1|  |  |  |  |  |  1 Spool Holder, credit http://www.thingiverse.com/thing:172484
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  | 2|  2 Spring 12mm OD, 0.75mm gauge x 10mm long
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 Spring 7mm OD, 1mm gauge x 10mm long
   | 2|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 AL square tube 19.392 x 19.392 x 1.5875 x 333.392mm
