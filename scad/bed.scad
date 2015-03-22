@@ -58,10 +58,14 @@ module bed_assembly(y = 0) {
             translate([0,i*(bed_depth/2), 0])
             rotate([0, 90, 0])
             square_tube(tube_dimensions, bed_width + extrusion_size);
-            vitamin("CB40: Corner Brace");
             for(j = [-1 : 2]) {
                 translate([j*screw_boss_diameter(frame_thick_screw), i*screw_boss_diameter(frame_thick_screw)*2, 0])
                 screw_and_washer(frame_thick_screw, 10);
+            }
+            for(k=[1,-1]) {
+                translate([k * envelope_dimensions.x/2, i*envelope_dimensions.y/2, 0])
+                    rotate([0,-90,0])
+                    bed_corner_stl();
             }
         }
     }
@@ -120,4 +124,20 @@ module bed_assembly(y = 0) {
     end("Bed");
 }
 
+module bed_corner_stl() {
+    stl("bed_corner");
+    rotate([0,90,0])
+    difference(){
+        cube([extrusion_size + default_wall*2, extrusion_size+default_wall*2, extrusion_size*2+default_wall*4],center=true);
+        translate([0,0,extrusion_size/2 + default_wall])
+            cube(size=[extrusion_size*2, extrusion_size, extrusion_size], center=true);
+        translate([0,0,-extrusion_size/2 - default_wall])
+            cube(size=[extrusion_size, extrusion_size*2, extrusion_size], center=true);
+
+        nut_trap(screw_radius(frame_thick_screw));
+
+    }
+
+}
 bed_assembly();
+//bed_corner_stl();

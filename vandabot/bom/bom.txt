@@ -23,7 +23,7 @@ Vitamins:
  4|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  4 19mm bulldog clip
  1|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  1 PCB bed 314mm x 214mm
   |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 Belt T2 x 6mm x 2148mm
-  | 4|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  4 Corner Brace
+  | 2|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  2 Corner Brace
  1|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  1 PCB Insulator 314mm x 214mm
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 E3D v6 Extruder
  1|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  1 Glass sheet 314mm x 202mm x 2mm
@@ -68,6 +68,7 @@ Vitamins:
  1|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  1 Red wire 32/0.2 length 620mm
 
 Printed:
+  | 4|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  4 bed_corner.stl
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 extruder_base.stl
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 extruder_hotend_clamp.stl
   |  | 1|  |  |  |  |  |  |  |  |  |  |  |  |  |  1 extruder_idler.stl
