@@ -22,26 +22,26 @@ module machine_assembly() {
 	vitamin(str("PSU12: Power Supply 12V 30A"));
 	translate([dimensions.x/2 - ps_cover_dim.y,dimensions.y/2 - ps_cover_dim.z,-dimensions.z/2 + ps_cover_dim.x/2])
 		rotate([0,90,180])
-		ps_cover_stl();
+			ps_cover_stl();
 	translate([dimensions.x/2 - extrusion_diag, 0, 0])
-		y_endstop_flag_stl();
+		render() y_endstop_flag_stl();
 	translate([-dimensions.x/2 + extrusion_diag, dimensions.y/2 - extrusion_diag, 0])
-		y_endstop_flag_stl();
+		render() y_endstop_flag_stl();
 
 
 	translate([dimensions.x/2,dimensions.y/2,envelope_dimensions.z/2])
 		rotate([0,0,180])
-		frame_clip_stl();
+		render() frame_clip_stl();
 	translate([dimensions.x/2,dimensions.y/2,envelope_dimensions.z/2 - 99])
 		rotate([0,0,180])
-		frame_clip_stl();
+		render() frame_clip_stl();
 	color("purple")
 		translate([dimensions.x/2 - extrusion_diag/2, dimensions.y/2 - 150, 30])
 		rotate([90,-90,-90]) {
-			smoothie_box_stl();
+			render() smoothie_box_stl();
 			translate([170,0,50])
 				rotate([0,180,0])
-				smoothie_box_lid_stl();
+				render() smoothie_box_lid_stl();
 	}
 }
 
@@ -59,8 +59,8 @@ module frame_clip_stl() {
 	difference() {
 		union() {
 			cube(size=[extrusion_size + default_wall*2, extrusion_size+default_wall, extrusion_size], center=true);
-			translate([-extrusion_size/2 - default_wall/2, extrusion_size*3/2, 0])
-			cube(size=[default_wall, extrusion_size*3, extrusion_size], center=true);
+			translate([-extrusion_size/2 - default_wall/2, extrusion_size*3/2+1.5, 0])
+			cube(size=[default_wall, extrusion_size*3+3, extrusion_size], center=true);
 		}
 		translate([0, -default_wall/2, 0])
 		cube(size=[extrusion_size, extrusion_size, extrusion_size*2], center=true);
