@@ -29,7 +29,7 @@ difference() {
 
 		// Support for the idler hinge
 		translate([15.5,-15.5,0]) {
-			cylinder(r=5, h=5, $fn=64);
+			cylinder(r=5, h=4, $fn=64);
 		}
 	}
 
@@ -156,6 +156,11 @@ difference() {
 		translate([x_idler,0,0]) {
 			cylinder(d=8, h=total_thickness, $fn=64);
 			cylinder(d=10, h=2.4, $fn=64);
+			difference() {
+				cylinder(h=total_thickness, d=35, center=false);
+				translate([-20,0,0])
+				cube(size=[40,40,total_thickness*3], center=true);
+			}
 		}
 
 		// extend the filament guide
@@ -188,8 +193,8 @@ difference() {
 
 		// Hole for the tightening screw
 		hull() {
-			translate([15,22,z_filament-5]) rotate([0,90,0]) cylinder(r=2, h=12, $fn=64);
-			translate([15,20,z_filament-5]) rotate([0,90,0]) cylinder(r=2, h=12, $fn=64);
+			translate([15,22,z_filament-4]) rotate([0,90,0]) cylinder(r=2, h=12, $fn=64);
+			translate([15,20,z_filament-4]) rotate([0,90,0]) cylinder(r=2, h=12, $fn=64);
 		}
 
 
@@ -270,10 +275,10 @@ module extruder_assembly() {
 
 //mk8();
 //render() base();
-//extruder_base_stl();
+ extruder_base_stl();
 //translate([0,0,1])
 //rotate([0, 180, 0]) hot_end_mount();
-//translate([0,0,5]) idler();
-//%translate([x_filament,35,z_filament]) rotate([90,0,0]) cylinder(r=1.75/2, h=70, $fn=64);
+translate([0,0,4]) idler();
+%translate([x_filament,35,z_filament]) rotate([90,0,0]) cylinder(r=1.75/2, h=70, $fn=64);
 
-extruder_assembly();
+// extruder_assembly();
