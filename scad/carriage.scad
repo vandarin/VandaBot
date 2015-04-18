@@ -354,9 +354,9 @@ module carriage_slide(hinged=true) {
 			carriage_layout() {
 				translate([0,0,-bb_mount_size + thick_wall/2 ]) {
 					// doubled so we can use shorter screws
-					nut_trap(screw_radius(bearing_screw(carriage_bearing)), nut_radius(screw_nut(bearing_screw(carriage_bearing))), nut_thickness(screw_nut(bearing_screw(carriage_bearing))));
+					rotate([0,0,30]) nut_trap(screw_radius(bearing_screw(carriage_bearing)), nut_radius(screw_nut(bearing_screw(carriage_bearing))), nut_thickness(screw_nut(bearing_screw(carriage_bearing))));
 					translate([0,0,-thick_wall/2])
-					nut_trap(screw_radius(bearing_screw(carriage_bearing)), nut_radius(screw_nut(bearing_screw(carriage_bearing))), nut_thickness(screw_nut(bearing_screw(carriage_bearing))));
+					rotate([0,0,30]) nut_trap(screw_radius(bearing_screw(carriage_bearing)), nut_radius(screw_nut(bearing_screw(carriage_bearing))), nut_thickness(screw_nut(bearing_screw(carriage_bearing))));
 
 				}
 			}

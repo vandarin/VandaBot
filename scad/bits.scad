@@ -140,8 +140,30 @@ module y_endstop_flag_stl() {
 	stl("y_endstop_flag");
 	endstop_flag_screw(10, frame_thick_screw);
 }
+
+module rosette(screw) {
+	difference() {
+		union() {
+			cylinder(h=2*screw_head_height(screw), r=2*screw_head_radius(screw), center=true);
+			for(i=[0:60:360]) {
+				rotate([0,0,i])
+				translate([screw_head_radius(screw)*1.5,0,0])
+				cylinder(h=2*screw_head_height(screw), r=screw_radius(screw)*2, center=true);
+			}
+		}
+		translate([0,0,screw_head_height(screw)/2])
+		nut_trap(screw_radius(screw), screw_head_radius(screw), screw_head_height(screw));
+	}
+}
+module m4_rosette_stl() {
+	stl("m4_rosette");
+	rosette(M4_hex_screw);
+}
+
 //belt_mount(GT2);
 //printed_washer_stl(BB608,M3_cap_screw);
 
 //z_long_belt_clip_stl();
-endstop_flag_screw(20, frame_thick_screw);
+//endstop_flag_screw(20, frame_thick_screw);
+
+m4_rosette_stl();

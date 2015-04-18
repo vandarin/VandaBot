@@ -137,7 +137,24 @@ module bed_corner_stl() {
         nut_trap(screw_radius(frame_thick_screw));
 
     }
+}
+
+module bed_stand_stl() {
+    stl("bed_stand");
+    rotate([0,90,0])
+    difference(){
+        cube([15, extrusion_size+default_wall*3, extrusion_size*2+default_wall*3],center=true);
+        translate([0,0,extrusion_size/2 + default_wall/2])
+            cube(size=[extrusion_size*2, extrusion_size, extrusion_size], center=true);
+        translate([0,0,-extrusion_size/2 - default_wall/2])
+            cube(size=[extrusion_size*2, extrusion_size, extrusion_size], center=true);
+
+        nut_trap(screw_radius(frame_thick_screw));
+        translate([0,0,extrusion_size/2 + default_wall/2])
+        cylinder(h=extrusion_size, d=24, center=true);
+    }
 
 }
-bed_assembly();
+//bed_assembly();
 //bed_corner_stl();
+bed_stand_stl();
